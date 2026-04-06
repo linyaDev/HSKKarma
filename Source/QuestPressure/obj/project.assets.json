@@ -470,9 +470,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Mods\\KarmaHSK\\Source\\QuestPressure\\QuestPressure.v16.csproj",
+      "projectUniqueName": "D:\\Mods\\KarmaHSK\\Source\\QuestPressure\\QuestPressure.v15.csproj",
       "projectName": "KarmaHSK",
-      "projectPath": "D:\\Mods\\KarmaHSK\\Source\\QuestPressure\\QuestPressure.v16.csproj",
+      "projectPath": "D:\\Mods\\KarmaHSK\\Source\\QuestPressure\\QuestPressure.v15.csproj",
       "packagesPath": "C:\\Users\\Linya\\.nuget\\packages\\",
       "outputPath": "D:\\Mods\\KarmaHSK\\Source\\QuestPressure\\obj\\",
       "projectStyle": "PackageReference",

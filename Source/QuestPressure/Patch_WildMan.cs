@@ -70,21 +70,28 @@ public static class Patch_WildManWounded
     }
 }
 
-[HarmonyPatch(typeof(GenSpawn), nameof(GenSpawn.Spawn), new[] { typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4), typeof(WipeMode), typeof(bool), typeof(bool) })]
-public static class Patch_WildManSpawned
+[HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.TryExecute))]
+public static class Patch_WildManIncident
 {
-    private static readonly HashSet<int> trackedWildMen = new HashSet<int>();
-
-    public static void Postfix(Thing __result)
+    public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)
     {
-        if (__result is Pawn pawn && pawn.IsWildMan() && pawn.Faction == null)
-        {
-            if (trackedWildMen.Contains(pawn.thingIDNumber))
-                return;
-            trackedWildMen.Add(pawn.thingIDNumber);
+        if (!__result)
+            return;
 
+        string defName = __instance.def?.defName;
+        if (defName == "WildManWandersIn")
+        {
             var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
             comp?.RecordQuest("QP_WildManArrived".Translate(), -1, QuestRecordType.MinorBonus);
+        }
+        else if (defName == "WildMenGroupWanderIn")
+        {
+            int count = parms.pawnCount > 0 ? parms.pawnCount : 1;
+            var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
+            if (comp == null) return;
+
+            for (int i = 0; i < count; i++)
+                comp.RecordQuest("QP_WildManArrived".Translate(), -1, QuestRecordType.MinorBonus);
         }
     }
 }
