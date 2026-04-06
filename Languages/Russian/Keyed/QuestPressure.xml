@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<QP_MercyHistory>Общая карма колонии</QP_MercyHistory>
+	<QP_Stats>Выполнено: {0}  |  Истекло: {1}  |  Счёт: {2}</QP_Stats>
+	<QP_Today>сегодня</QP_Today>
+	<QP_DaysAgo>{0} дн. назад</QP_DaysAgo>
+	<QP_Gained>Получено</QP_Gained>
+	<QP_Lost>Потеряно</QP_Lost>
+	<QP_Score>Счёт</QP_Score>
+	<QP_SettingsCategory>Карма</QP_SettingsCategory>
+	<QP_ThreatMultiplier>Множитель угрозы заданий</QP_ThreatMultiplier>
+	<QP_RewardMultiplier>Множитель награды заданий</QP_RewardMultiplier>
+	<QP_Stage0>бессердечные</QP_Stage0>
+	<QP_Stage1>жестокие</QP_Stage1>
+	<QP_Stage2>безразличные</QP_Stage2>
+	<QP_Stage3>равнодушные</QP_Stage3>
+	<QP_Stage4>чёрствые</QP_Stage4>
+	<QP_Stage5>нейтрально</QP_Stage5>
+	<QP_Stage6>заботливые</QP_Stage6>
+	<QP_Stage7>сочувствующие</QP_Stage7>
+	<QP_Stage8>милосердные</QP_Stage8>
+	<QP_Stage9>святые</QP_Stage9>
+	<QP_NextLevel>до след.: {0} оч.</QP_NextLevel>
+	<QP_WildManKilled>Дикий человек убит</QP_WildManKilled>
+	<QP_WildManWounded>Дикий человек ранен</QP_WildManWounded>
+	<QP_WildManArrived>Совместное существование с дикарём</QP_WildManArrived>
+</LanguageData>

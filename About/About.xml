@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>KarmaHSK</name>
+	<author>linyaDev</author>
+	<supportedVersions>
+		<li>1.5</li>
+		<li>1.6</li>
+	</supportedVersions>
+	<packageId>linya.karmahsk</packageId>
+	<description>
+[English]
+Adds a mood penalty when quest acceptance time expires.
+Each expired quest gives -3 mood debuff for 2 years. Stacks up to 7 times (max -21).
+
+[Russian]
+Adds a mood penalty when quest acceptance time expires.
+Each expired quest gives -3 mood debuff for 2 years. Stacks up to 7 times (max -21).
+	</description>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld</li>
+	</loadAfter>
+</ModMetaData>

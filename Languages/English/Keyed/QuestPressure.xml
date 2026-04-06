@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<QP_MercyHistory>Colony Karma</QP_MercyHistory>
+	<QP_Stats>Completed: {0}  |  Expired: {1}  |  Score: {2}</QP_Stats>
+	<QP_Today>today</QP_Today>
+	<QP_DaysAgo>{0}d ago</QP_DaysAgo>
+	<QP_Gained>Gained</QP_Gained>
+	<QP_Lost>Lost</QP_Lost>
+	<QP_Score>Score</QP_Score>
+	<QP_SettingsCategory>Karma</QP_SettingsCategory>
+	<QP_ThreatMultiplier>Quest threat multiplier</QP_ThreatMultiplier>
+	<QP_RewardMultiplier>Quest reward multiplier</QP_RewardMultiplier>
+	<QP_Stage0>heartless</QP_Stage0>
+	<QP_Stage1>cruel</QP_Stage1>
+	<QP_Stage2>indifferent</QP_Stage2>
+	<QP_Stage3>apathetic</QP_Stage3>
+	<QP_Stage4>cold</QP_Stage4>
+	<QP_Stage5>neutral</QP_Stage5>
+	<QP_Stage6>caring</QP_Stage6>
+	<QP_Stage7>sympathetic</QP_Stage7>
+	<QP_Stage8>merciful</QP_Stage8>
+	<QP_Stage9>saintly</QP_Stage9>
+	<QP_NextLevel>next: {0} pts</QP_NextLevel>
+	<QP_WildManKilled>Wild man killed</QP_WildManKilled>
+	<QP_WildManWounded>Wild man wounded</QP_WildManWounded>
+	<QP_WildManArrived>Coexistence with wild man</QP_WildManArrived>
+</LanguageData>
