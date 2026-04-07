@@ -9,9 +9,12 @@ public class Dialog_MercyInfo : Window
 {
     private readonly Pawn pawn;
     private Vector2 scrollPosition;
+    private HashSet<int> selectedIndices = new HashSet<int>();
+    private bool editMode;
 
     private static readonly Color GreenBg = new Color(0.2f, 0.5f, 0.2f, 0.3f);
     private static readonly Color RedBg = new Color(0.5f, 0.2f, 0.2f, 0.3f);
+    private static readonly Color SelectedBg = new Color(0.3f, 0.3f, 0.8f, 0.4f);
     private static readonly Color GreenText = new Color(0.4f, 0.95f, 0.4f);
     private static readonly Color RedText = new Color(0.95f, 0.4f, 0.4f);
     private static readonly Color DimText = new Color(1f, 1f, 1f, 0.5f);
@@ -93,6 +96,42 @@ public class Dialog_MercyInfo : Window
         GUI.color = Color.white;
         y += 4f;
 
+        // Edit buttons
+        Rect editBtnRect = new Rect(inRect.width - 80f, y, 75f, 24f);
+        if (editMode)
+        {
+            // Delete button
+            if (selectedIndices.Count > 0)
+            {
+                Rect delBtnRect = new Rect(inRect.width - 165f, y, 80f, 24f);
+                GUI.color = RedText;
+                if (Widgets.ButtonText(delBtnRect, "QP_Delete".Translate()))
+                {
+                    var sorted = new List<int>(selectedIndices);
+                    sorted.Sort((a, b) => b.CompareTo(a));
+                    foreach (int idx in sorted)
+                    {
+                        if (idx >= 0 && idx < comp.Records.Count)
+                            comp.Records.RemoveAt(idx);
+                    }
+                    selectedIndices.Clear();
+                }
+                GUI.color = Color.white;
+            }
+
+            if (Widgets.ButtonText(editBtnRect, "QP_Done".Translate()))
+            {
+                editMode = false;
+                selectedIndices.Clear();
+            }
+        }
+        else
+        {
+            if (Widgets.ButtonText(editBtnRect, "QP_Edit".Translate()))
+                editMode = true;
+        }
+        y += 28f;
+
         // Quest list
         var records = comp.Records;
         float listHeight = records.Count * 30f;
@@ -120,7 +159,20 @@ public class Dialog_MercyInfo : Window
             string pointsStr = isPositive ? "+" + points : points.ToString();
 
             // Row background
-            Widgets.DrawBoxSolid(rowRect, isPositive ? GreenBg : RedBg);
+            bool isSelected = selectedIndices.Contains(i);
+            if (isSelected)
+                Widgets.DrawBoxSolid(rowRect, SelectedBg);
+            else
+                Widgets.DrawBoxSolid(rowRect, isPositive ? GreenBg : RedBg);
+
+            // Edit mode: click to select/deselect
+            if (editMode && Widgets.ButtonInvisible(rowRect))
+            {
+                if (isSelected)
+                    selectedIndices.Remove(i);
+                else
+                    selectedIndices.Add(i);
+            }
             if (i % 2 == 0)
                 Widgets.DrawLightHighlight(rowRect);
 
