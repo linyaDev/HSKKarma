@@ -35,7 +35,8 @@ public static class Patch_QuestExpired
     // Quests excluded from karma penalty when expired
     private static readonly HashSet<string> excludedQuests = new HashSet<string>
     {
-        "OpportunitySite_WorkSite"
+        "OpportunitySite_WorkSite",
+        "OpportunitySite_ItemStash"
     };
 
     public static void Postfix(Quest __instance, bool __state)
@@ -89,7 +90,8 @@ public static class Patch_QuestCompleted
 
     private static readonly HashSet<string> excludedQuests = new HashSet<string>
     {
-        "OpportunitySite_WorkSite"
+        "OpportunitySite_WorkSite",
+        "OpportunitySite_ItemStash"
     };
 }
 
