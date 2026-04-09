@@ -57,6 +57,14 @@ public class QuestPressureMod : Mod
             list.Label(maxLabel, -1f, (TipSignal?)null);
 #endif
             Settings.maxRefugees = (int)list.Slider(Settings.maxRefugees, 1f, 10f);
+
+            string helpersLabel = "QP_MaxHelpers".Translate() + ": " + Settings.maxHelpers;
+#if V15
+            list.Label(helpersLabel, -1f, (string)null);
+#else
+            list.Label(helpersLabel, -1f, (TipSignal?)null);
+#endif
+            Settings.maxHelpers = (int)list.Slider(Settings.maxHelpers, 1f, 6f);
         }
 
         list.Gap(6f);

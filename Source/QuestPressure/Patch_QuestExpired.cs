@@ -62,17 +62,35 @@ public static class Patch_QuestCompleted
 {
     public static void Postfix(Quest __instance, QuestEndOutcome outcome)
     {
-        if (outcome != QuestEndOutcome.Success)
-            return;
-
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         if (comp == null) return;
 
-        if (__instance.charity)
-            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.CharityCompleted);
-        else
-            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.Completed);
+        string name = __instance.name ?? "Unknown";
+
+        if (outcome == QuestEndOutcome.Success)
+        {
+            if (__instance.charity)
+                comp.RecordQuest(name, __instance.id, QuestRecordType.CharityCompleted);
+            else
+                comp.RecordQuest(name, __instance.id, QuestRecordType.Completed);
+        }
+        else if (outcome == QuestEndOutcome.Fail)
+        {
+            // Skip excluded quest types
+            if (__instance.root != null && excludedQuests.Contains(__instance.root.defName))
+                return;
+
+            if (__instance.charity)
+                comp.RecordQuest(name, __instance.id, QuestRecordType.CharityExpired);
+            else
+                comp.RecordQuest(name, __instance.id, QuestRecordType.Expired);
+        }
     }
+
+    private static readonly HashSet<string> excludedQuests = new HashSet<string>
+    {
+        "OpportunitySite_WorkSite"
+    };
 }
 
 [HarmonyPatch(typeof(StorytellerComp), nameof(StorytellerComp.GenerateParms))]

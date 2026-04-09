@@ -8,6 +8,7 @@ public class QuestPressureSettings : ModSettings
     public float rewardMultiplier = 1.0f;
     public bool limitRefugees = true;
     public int maxRefugees = 4;
+    public int maxHelpers = 2;
     public bool nerfWastepacks = true;
     public float wastepackBaseMultiplier = 0.5f;
     public float wastepackNeolithicMult = 0.5f;
@@ -19,6 +20,7 @@ public class QuestPressureSettings : ModSettings
         Scribe_Values.Look(ref rewardMultiplier, "rewardMultiplier", 1.0f);
         Scribe_Values.Look(ref limitRefugees, "limitRefugees", true);
         Scribe_Values.Look(ref maxRefugees, "maxRefugees", 4);
+        Scribe_Values.Look(ref maxHelpers, "maxHelpers", 2);
         Scribe_Values.Look(ref nerfWastepacks, "nerfWastepacks", true);
         Scribe_Values.Look(ref wastepackBaseMultiplier, "wastepackBaseMultiplier", 0.5f);
         Scribe_Values.Look(ref wastepackNeolithicMult, "wastepackNeolithicMult", 0.5f);
