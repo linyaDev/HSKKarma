@@ -96,41 +96,7 @@ public class Dialog_MercyInfo : Window
         GUI.color = Color.white;
         y += 4f;
 
-        // Edit buttons
-        Rect editBtnRect = new Rect(inRect.width - 80f, y, 75f, 24f);
-        if (editMode)
-        {
-            // Delete button
-            if (selectedIndices.Count > 0)
-            {
-                Rect delBtnRect = new Rect(inRect.width - 165f, y, 80f, 24f);
-                GUI.color = RedText;
-                if (Widgets.ButtonText(delBtnRect, "QP_Delete".Translate()))
-                {
-                    var sorted = new List<int>(selectedIndices);
-                    sorted.Sort((a, b) => b.CompareTo(a));
-                    foreach (int idx in sorted)
-                    {
-                        if (idx >= 0 && idx < comp.Records.Count)
-                            comp.Records.RemoveAt(idx);
-                    }
-                    selectedIndices.Clear();
-                }
-                GUI.color = Color.white;
-            }
-
-            if (Widgets.ButtonText(editBtnRect, "QP_Done".Translate()))
-            {
-                editMode = false;
-                selectedIndices.Clear();
-            }
-        }
-        else
-        {
-            if (Widgets.ButtonText(editBtnRect, "QP_Edit".Translate()))
-                editMode = true;
-        }
-        y += 28f;
+        y += 4f;
 
         // Quest list
         var records = comp.Records;
