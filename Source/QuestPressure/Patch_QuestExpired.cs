@@ -32,13 +32,28 @@ public static class Patch_QuestExpired
 #endif
     }
 
+    // Quests excluded from karma penalty when expired
+    private static readonly HashSet<string> excludedQuests = new HashSet<string>
+    {
+        "OpportunitySite_WorkSite"
+    };
+
     public static void Postfix(Quest __instance, bool __state)
     {
         if (!__state)
             return;
 
+        // Skip excluded quest types
+        if (__instance.root != null && excludedQuests.Contains(__instance.root.defName))
+            return;
+
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
-        comp?.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.Expired);
+        if (comp == null) return;
+
+        if (__instance.charity)
+            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.CharityExpired);
+        else
+            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.Expired);
     }
 }
 
@@ -51,7 +66,12 @@ public static class Patch_QuestCompleted
             return;
 
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
-        comp?.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.Completed);
+        if (comp == null) return;
+
+        if (__instance.charity)
+            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.CharityCompleted);
+        else
+            comp.RecordQuest(__instance.name ?? "Unknown", __instance.id, QuestRecordType.Completed);
     }
 }
 

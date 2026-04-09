@@ -10,7 +10,9 @@ public enum QuestRecordType : byte
     Expired,
     MinorPenalty,  // -1 (e.g. wounding wild man)
     MajorPenalty,  // -4 (e.g. killing wild man)
-    MinorBonus     // +2 (e.g. wild man spotted)
+    MinorBonus,    // +2 (e.g. wild man spotted)
+    CharityCompleted, // +5 (charity quest)
+    CharityExpired    // -6 (charity quest expired)
 }
 
 public struct QuestRecord : IExposable
@@ -44,6 +46,8 @@ public class GameComponent_QuestPressure : GameComponent
     public const int MinorPenaltyWeight = -1;
     public const int MajorPenaltyWeight = -4;
     public const int MinorBonusWeight = 2;
+    public const int CharityCompletedWeight = 5;
+    public const int CharityExpiredWeight = -6;
 
     public int Score
     {
@@ -59,6 +63,8 @@ public class GameComponent_QuestPressure : GameComponent
                     case QuestRecordType.MinorPenalty: score += MinorPenaltyWeight; break;
                     case QuestRecordType.MajorPenalty: score += MajorPenaltyWeight; break;
                     case QuestRecordType.MinorBonus: score += MinorBonusWeight; break;
+                    case QuestRecordType.CharityCompleted: score += CharityCompletedWeight; break;
+                    case QuestRecordType.CharityExpired: score += CharityExpiredWeight; break;
                 }
             }
             return score;

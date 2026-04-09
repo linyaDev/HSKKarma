@@ -15,22 +15,34 @@ namespace KarmaHSK;
 [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
 public static class Patch_WildManKilled
 {
+    // Track wild men wounded by colonists
+    public static readonly HashSet<int> woundedByColonist = new HashSet<int>();
+
     public static void Prefix(Pawn __instance, DamageInfo? dinfo)
     {
         if (!__instance.IsWildMan())
             return;
 
-        // Check if killer is a colonist
+        // Direct kill by colonist
         Pawn killer = dinfo?.Instigator as Pawn;
-        if (killer == null || !killer.IsColonist)
+        if (killer != null && killer.IsColonist)
+        {
+            RecordKill();
             return;
+        }
 
+        // Died from wounds inflicted by colonist
+        if (woundedByColonist.Contains(__instance.thingIDNumber))
+        {
+            woundedByColonist.Remove(__instance.thingIDNumber);
+            RecordKill();
+        }
+    }
+
+    private static void RecordKill()
+    {
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
-        if (comp == null)
-            return;
-
-        // -4 via MajorPenalty weight
-        comp.RecordQuest("QP_WildManKilled".Translate(), -1, QuestRecordType.MajorPenalty);
+        comp?.RecordQuest("QP_WildManKilled".Translate(), -1, QuestRecordType.MajorPenalty);
     }
 }
 
@@ -63,6 +75,9 @@ public static class Patch_WildManWounded
         if (woundedThisDay.Contains(__instance.thingIDNumber))
             return;
         woundedThisDay.Add(__instance.thingIDNumber);
+
+        // Track for death check
+        Patch_WildManKilled.woundedByColonist.Add(__instance.thingIDNumber);
 
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         // -1 via MinorPenalty weight

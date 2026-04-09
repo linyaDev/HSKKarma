@@ -10,6 +10,15 @@
 	<QP_SettingsCategory>Карма</QP_SettingsCategory>
 	<QP_ThreatMultiplier>Множитель угрозы заданий</QP_ThreatMultiplier>
 	<QP_RewardMultiplier>Множитель награды заданий</QP_RewardMultiplier>
+	<QP_QuestSection>— Квесты —</QP_QuestSection>
+	<QP_LimitRefugees>Ограничить беженцев</QP_LimitRefugees>
+	<QP_LimitRefugeesTooltip>Количество беженцев = колонисты / 2.\nАдаптация для HSK — предотвращает слишком большие группы беженцев.</QP_LimitRefugeesTooltip>
+	<QP_MaxRefugees>Максимум беженцев</QP_MaxRefugees>
+	<QP_NerfWastepacks>Уменьшить мешки отходов</QP_NerfWastepacks>
+	<QP_NerfWastepacksTooltip>Снижает количество мешков отходов в квестах.\nБазовый множитель применяется всегда.\nДополнительный множитель для ранних эпох (Неолит, Средневековье).\nПри Неолите: 50% × 50% = 25% от ванили.</QP_NerfWastepacksTooltip>
+	<QP_WastepackBase>Базовый множитель мешков</QP_WastepackBase>
+	<QP_WastepackNeolithic>Доп. множитель (Неолит)</QP_WastepackNeolithic>
+	<QP_WastepackMedieval>Доп. множитель (Средневековье)</QP_WastepackMedieval>
 	<QP_Stage0>бессердечные</QP_Stage0>
 	<QP_Stage1>жестокие</QP_Stage1>
 	<QP_Stage2>безразличные</QP_Stage2>

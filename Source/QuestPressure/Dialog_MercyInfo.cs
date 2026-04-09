@@ -146,7 +146,7 @@ public class Dialog_MercyInfo : Window
             var r = records[i];
             Rect rowRect = new Rect(0f, rowY, viewRect.width, 28f);
 
-            bool isPositive = r.type == QuestRecordType.Completed || r.type == QuestRecordType.MinorBonus;
+            bool isPositive = r.type == QuestRecordType.Completed || r.type == QuestRecordType.MinorBonus || r.type == QuestRecordType.CharityCompleted;
             int points;
             switch (r.type)
             {
@@ -154,6 +154,8 @@ public class Dialog_MercyInfo : Window
                 case QuestRecordType.MinorBonus: points = GameComponent_QuestPressure.MinorBonusWeight; break;
                 case QuestRecordType.MinorPenalty: points = GameComponent_QuestPressure.MinorPenaltyWeight; break;
                 case QuestRecordType.MajorPenalty: points = GameComponent_QuestPressure.MajorPenaltyWeight; break;
+                case QuestRecordType.CharityCompleted: points = GameComponent_QuestPressure.CharityCompletedWeight; break;
+                case QuestRecordType.CharityExpired: points = GameComponent_QuestPressure.CharityExpiredWeight; break;
                 default: points = GameComponent_QuestPressure.ExpiredWeight; break;
             }
             string pointsStr = isPositive ? "+" + points : points.ToString();

@@ -37,6 +37,58 @@ public class QuestPressureMod : Mod
 #endif
         Settings.rewardMultiplier = list.Slider(Settings.rewardMultiplier, 0.1f, 3.0f);
 
+        list.GapLine();
+
+        // === Quests section ===
+#if V15
+        list.Label("QP_QuestSection".Translate(), -1f, (string)null);
+#else
+        list.Label("QP_QuestSection".Translate(), -1f, (TipSignal?)null);
+#endif
+        list.Gap(4f);
+
+        list.CheckboxLabeled("QP_LimitRefugees".Translate(), ref Settings.limitRefugees, "QP_LimitRefugeesTooltip".Translate());
+        if (Settings.limitRefugees)
+        {
+            string maxLabel = "QP_MaxRefugees".Translate() + ": " + Settings.maxRefugees;
+#if V15
+            list.Label(maxLabel, -1f, (string)null);
+#else
+            list.Label(maxLabel, -1f, (TipSignal?)null);
+#endif
+            Settings.maxRefugees = (int)list.Slider(Settings.maxRefugees, 1f, 10f);
+        }
+
+        list.Gap(6f);
+
+        list.CheckboxLabeled("QP_NerfWastepacks".Translate(), ref Settings.nerfWastepacks, "QP_NerfWastepacksTooltip".Translate());
+        if (Settings.nerfWastepacks)
+        {
+            string baseLabel = "QP_WastepackBase".Translate() + ": " + (Settings.wastepackBaseMultiplier * 100f).ToString("F0") + "%";
+#if V15
+            list.Label(baseLabel, -1f, (string)null);
+#else
+            list.Label(baseLabel, -1f, (TipSignal?)null);
+#endif
+            Settings.wastepackBaseMultiplier = Mathf.Round(list.Slider(Settings.wastepackBaseMultiplier, 0.1f, 1.0f) * 10f) / 10f;
+
+            string neoLabel = "QP_WastepackNeolithic".Translate() + ": " + (Settings.wastepackNeolithicMult * 100f).ToString("F0") + "%";
+#if V15
+            list.Label(neoLabel, -1f, (string)null);
+#else
+            list.Label(neoLabel, -1f, (TipSignal?)null);
+#endif
+            Settings.wastepackNeolithicMult = Mathf.Round(list.Slider(Settings.wastepackNeolithicMult, 0.1f, 1.0f) * 10f) / 10f;
+
+            string medLabel = "QP_WastepackMedieval".Translate() + ": " + (Settings.wastepackMedievalMult * 100f).ToString("F0") + "%";
+#if V15
+            list.Label(medLabel, -1f, (string)null);
+#else
+            list.Label(medLabel, -1f, (TipSignal?)null);
+#endif
+            Settings.wastepackMedievalMult = Mathf.Round(list.Slider(Settings.wastepackMedievalMult, 0.1f, 1.0f) * 10f) / 10f;
+        }
+
         list.End();
     }
 
