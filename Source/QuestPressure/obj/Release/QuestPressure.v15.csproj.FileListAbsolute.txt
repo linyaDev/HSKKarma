@@ -1,8 +1,0 @@
-D:\Mods\KarmaHSK\1.5\Assemblies\KarmaHSK.dll
-D:\Mods\KarmaHSK\1.5\Assemblies\KarmaHSK.pdb
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\QuestPressure.v15.csproj.AssemblyReference.cache
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\QuestPressure.v15.IgnoresAccessChecksTo.cs
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\QuestPressure.v15.GeneratedMSBuildEditorConfig.editorconfig
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\QuestPressure.v15.csproj.CoreCompileInputs.cache
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\KarmaHSK.dll
-D:\Mods\KarmaHSK\Source\QuestPressure\obj\Release\KarmaHSK.pdb
