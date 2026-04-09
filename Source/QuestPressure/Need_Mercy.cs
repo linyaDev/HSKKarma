@@ -17,7 +17,9 @@ public class Need_Mercy : Need
     {
     }
 
-    public override bool ShowOnNeedList => !IsExcluded;
+    private bool IsGuest => pawn.Faction != Faction.OfPlayer || pawn.IsQuestLodger();
+
+    public override bool ShowOnNeedList => !IsExcluded && !IsGuest;
 
     private bool IsExcluded
     {
@@ -40,6 +42,9 @@ public class Need_Mercy : Need
 
     public override void NeedInterval()
     {
+        if (IsGuest)
+            return;
+
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         if (comp == null)
             return;
