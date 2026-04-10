@@ -185,7 +185,9 @@ public class Dialog_MercyInfo : Window
             Text.Anchor = TextAnchor.MiddleRight;
             int daysAgo = (Find.TickManager.TicksGame - r.tick) / 60000;
             string timeStr = daysAgo <= 0 ? "QP_Today".Translate().ToString() : "QP_DaysAgo".Translate(daysAgo);
+            Text.WordWrap = false;
             Widgets.Label(new Rect(viewRect.width - 85f, rowY, 80f, 28f), timeStr);
+            Text.WordWrap = true;
 
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
