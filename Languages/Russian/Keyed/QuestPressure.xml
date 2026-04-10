@@ -35,6 +35,8 @@
 	<QP_WildManKilled>Дикий человек убит</QP_WildManKilled>
 	<QP_WildManWounded>Дикий человек ранен</QP_WildManWounded>
 	<QP_WildManArrived>Совместное существование с дикарём</QP_WildManArrived>
+	<QP_GuestsAllowed>Путешественники пропущены</QP_GuestsAllowed>
+	<QP_GuestsRefused>Путешественникам отказано</QP_GuestsRefused>
 	<QP_Edit>Ред.</QP_Edit>
 	<QP_Done>Готово</QP_Done>
 	<QP_Delete>Удалить</QP_Delete>

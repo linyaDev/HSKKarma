@@ -7,13 +7,15 @@ namespace KarmaHSK;
 
 public enum QuestRecordType : byte
 {
-    Completed,
-    Expired,
-    MinorPenalty,  // -1 (e.g. wounding wild man)
-    MajorPenalty,  // -4 (e.g. killing wild man)
-    MinorBonus,    // +2 (e.g. wild man spotted)
-    CharityCompleted, // +5 (charity quest)
-    CharityExpired    // -6 (charity quest expired)
+    Completed,         // +3
+    Expired,           // -2
+    MinorPenalty,      // -1 (e.g. wounding wild man)
+    MajorPenalty,      // -4 (e.g. killing wild man)
+    MinorBonus,        // +2 (e.g. wild man spotted)
+    CharityCompleted,  // +5 (charity quest)
+    CharityExpired,    // -6 (charity quest expired)
+    TinyBonus,         // +1 (e.g. allowed travelers)
+    TinyPenalty        // -1 (e.g. refused travelers) — same weight as MinorPenalty but separate type
 }
 
 public struct QuestRecord : IExposable
@@ -37,6 +39,7 @@ public class GameComponent_QuestPressure : GameComponent
     private List<QuestRecord> records = new List<QuestRecord>();
     private const int YearTicks = 3600000;
     private int cleanupCounter;
+    private int lastGuestsRefused;
 
     public GameComponent_QuestPressure(Game game) : base()
     {
@@ -49,6 +52,8 @@ public class GameComponent_QuestPressure : GameComponent
     public const int MinorBonusWeight = 2;
     public const int CharityCompletedWeight = 5;
     public const int CharityExpiredWeight = -6;
+    public const int TinyBonusWeight = 1;
+    public const int TinyPenaltyWeight = -1;
 
     public int Score
     {
@@ -66,6 +71,8 @@ public class GameComponent_QuestPressure : GameComponent
                     case QuestRecordType.MinorBonus: score += MinorBonusWeight; break;
                     case QuestRecordType.CharityCompleted: score += CharityCompletedWeight; break;
                     case QuestRecordType.CharityExpired: score += CharityExpiredWeight; break;
+                    case QuestRecordType.TinyBonus: score += TinyBonusWeight; break;
+                    case QuestRecordType.TinyPenalty: score += TinyPenaltyWeight; break;
                 }
             }
             return score;
@@ -95,6 +102,8 @@ public class GameComponent_QuestPressure : GameComponent
                 case QuestRecordType.MinorPenalty: points = MinorPenaltyWeight; break;
                 case QuestRecordType.MajorPenalty: points = MajorPenaltyWeight; break;
                 case QuestRecordType.MinorBonus: points = MinorBonusWeight; break;
+                case QuestRecordType.TinyBonus: points = TinyBonusWeight; break;
+                case QuestRecordType.TinyPenalty: points = TinyPenaltyWeight; break;
                 default: points = ExpiredWeight; break;
             }
             ShowMoteOverLeader(points);
@@ -126,6 +135,10 @@ public class GameComponent_QuestPressure : GameComponent
 
     public override void GameComponentTick()
     {
+        // Check ABE guest refusals every game hour
+        if (cleanupCounter % 2500 == 0)
+            CheckGuestRefusals();
+
         cleanupCounter++;
         if (cleanupCounter < 60000)
             return;
@@ -133,6 +146,45 @@ public class GameComponent_QuestPressure : GameComponent
 
         int cutoff = Find.TickManager.TicksGame - YearTicks;
         records.RemoveAll(r => r.tick < cutoff);
+    }
+
+    private System.Reflection.FieldInfo cachedRefusalField;
+    private GameComponent cachedRefusalTracker;
+    private bool refusalLookupDone;
+
+    private void CheckGuestRefusals()
+    {
+        if (!refusalLookupDone)
+        {
+            refusalLookupDone = true;
+            foreach (var comp in Current.Game.components)
+            {
+                if (comp.GetType().FullName == "AskBeforeEnter.GameComponent_RefusalTracker")
+                {
+                    cachedRefusalTracker = comp;
+                    cachedRefusalField = comp.GetType().GetField("guestsRefused");
+                    break;
+                }
+            }
+        }
+
+        if (cachedRefusalTracker == null || cachedRefusalField == null)
+            return;
+
+        int current = (int)cachedRefusalField.GetValue(cachedRefusalTracker);
+        if (lastGuestsRefused == 0)
+        {
+            lastGuestsRefused = current;
+            return;
+        }
+
+        if (current > lastGuestsRefused)
+        {
+            int diff = current - lastGuestsRefused;
+            for (int i = 0; i < diff; i++)
+                RecordQuest("QP_GuestsRefused".Translate(), 0, QuestRecordType.TinyPenalty);
+        }
+        lastGuestsRefused = current;
     }
 
     public override void ExposeData()
