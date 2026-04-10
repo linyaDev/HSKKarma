@@ -20,6 +20,7 @@
 	<QP_WastepackBase>Базовый множитель мешков</QP_WastepackBase>
 	<QP_WastepackNeolithic>Доп. множитель (Неолит)</QP_WastepackNeolithic>
 	<QP_WastepackMedieval>Доп. множитель (Средневековье)</QP_WastepackMedieval>
+	<QP_MoteMercy>милость</QP_MoteMercy>
 	<QP_Stage0>бессердечные</QP_Stage0>
 	<QP_Stage1>жестокие</QP_Stage1>
 	<QP_Stage2>безразличные</QP_Stage2>

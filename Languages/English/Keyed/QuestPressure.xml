@@ -20,6 +20,7 @@
 	<QP_WastepackBase>Base wastepack multiplier</QP_WastepackBase>
 	<QP_WastepackNeolithic>Extra multiplier (Neolithic)</QP_WastepackNeolithic>
 	<QP_WastepackMedieval>Extra multiplier (Medieval)</QP_WastepackMedieval>
+	<QP_MoteMercy>mercy</QP_MoteMercy>
 	<QP_Stage0>heartless</QP_Stage0>
 	<QP_Stage1>cruel</QP_Stage1>
 	<QP_Stage2>indifferent</QP_Stage2>

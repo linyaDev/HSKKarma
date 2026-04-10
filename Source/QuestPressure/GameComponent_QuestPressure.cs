@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace KarmaHSK;
@@ -73,7 +74,7 @@ public class GameComponent_QuestPressure : GameComponent
 
     public List<QuestRecord> Records => records;
 
-    public void RecordQuest(string questName, int questId, QuestRecordType type)
+    public void RecordQuest(string questName, int questId, QuestRecordType type, bool showMote = true)
     {
         records.Add(new QuestRecord
         {
@@ -82,6 +83,45 @@ public class GameComponent_QuestPressure : GameComponent
             questId = questId,
             type = type
         });
+
+        if (showMote)
+        {
+            int points;
+            switch (type)
+            {
+                case QuestRecordType.Completed: points = CompletedWeight; break;
+                case QuestRecordType.CharityCompleted: points = CharityCompletedWeight; break;
+                case QuestRecordType.CharityExpired: points = CharityExpiredWeight; break;
+                case QuestRecordType.MinorPenalty: points = MinorPenaltyWeight; break;
+                case QuestRecordType.MajorPenalty: points = MajorPenaltyWeight; break;
+                case QuestRecordType.MinorBonus: points = MinorBonusWeight; break;
+                default: points = ExpiredWeight; break;
+            }
+            ShowMoteOverLeader(points);
+        }
+    }
+
+    private void ShowMoteOverLeader(int points)
+    {
+        var leader = FindLeader();
+        if (leader == null || !leader.Spawned)
+            return;
+
+        string text = (points > 0 ? "+" : "") + points + " " + "QP_MoteMercy".Translate();
+        Color color = points > 0
+            ? new Color(0.4f, 0.95f, 0.4f)
+            : new Color(0.95f, 0.4f, 0.4f);
+        MoteMaker.ThrowText(leader.DrawPos, leader.Map, text, color);
+    }
+
+    private Pawn FindLeader()
+    {
+        foreach (var p in PawnsFinder.AllMaps_FreeColonists)
+        {
+            if (p.Spawned)
+                return p;
+        }
+        return null;
     }
 
     public override void GameComponentTick()
