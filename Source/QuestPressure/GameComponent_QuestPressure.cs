@@ -164,6 +164,10 @@ public class GameComponent_QuestPressure : GameComponent
             return;
 
         int current = (int)cachedRefusalField.GetValue(cachedRefusalTracker);
+
+        try { System.IO.File.AppendAllText(@"D:\Mods\karma_debug.txt",
+            $"REFUSAL CHECK: current={current}, last={lastGuestsRefused}\n"); } catch { }
+
         if (lastGuestsRefused == 0)
         {
             lastGuestsRefused = current;
@@ -182,6 +186,7 @@ public class GameComponent_QuestPressure : GameComponent
     public override void ExposeData()
     {
         Scribe_Collections.Look(ref records, "records", LookMode.Deep);
+        Scribe_Values.Look(ref lastGuestsRefused, "lastGuestsRefused");
         if (records == null)
             records = new List<QuestRecord>();
     }
