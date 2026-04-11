@@ -44,15 +44,13 @@ public class Dialog_MercyInfo : Window
         float y = 40f;
 
         // Stats summary
-        int completed = 0, expired = 0;
+        int gained = 0, lost = 0;
         foreach (var r in comp.Records)
         {
-            if (r.type == QuestRecordType.Completed) completed++;
-            else expired++;
+            int w = comp.GetPoints(r);
+            if (w > 0) gained += w;
+            else lost += w;
         }
-
-        int gained = completed * GameComponent_QuestPressure.CompletedWeight;
-        int lost = expired * GameComponent_QuestPressure.ExpiredWeight;
 
         // Score bar area
         Rect statsRect = new Rect(0f, y, inRect.width, 50f);
@@ -112,18 +110,8 @@ public class Dialog_MercyInfo : Window
             var r = records[i];
             Rect rowRect = new Rect(0f, rowY, viewRect.width, 28f);
 
-            bool isPositive = r.type == QuestRecordType.Completed || r.type == QuestRecordType.MinorBonus || r.type == QuestRecordType.CharityCompleted;
-            int points;
-            switch (r.type)
-            {
-                case QuestRecordType.Completed: points = GameComponent_QuestPressure.CompletedWeight; break;
-                case QuestRecordType.MinorBonus: points = GameComponent_QuestPressure.MinorBonusWeight; break;
-                case QuestRecordType.MinorPenalty: points = GameComponent_QuestPressure.MinorPenaltyWeight; break;
-                case QuestRecordType.MajorPenalty: points = GameComponent_QuestPressure.MajorPenaltyWeight; break;
-                case QuestRecordType.CharityCompleted: points = GameComponent_QuestPressure.CharityCompletedWeight; break;
-                case QuestRecordType.CharityExpired: points = GameComponent_QuestPressure.CharityExpiredWeight; break;
-                default: points = GameComponent_QuestPressure.ExpiredWeight; break;
-            }
+            int points = comp.GetPoints(r);
+            bool isPositive = points > 0;
             string pointsStr = isPositive ? "+" + points : points.ToString();
 
             // Row background

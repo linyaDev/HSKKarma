@@ -61,25 +61,29 @@ public class GameComponent_QuestPressure : GameComponent
         {
             int score = 0;
             foreach (var r in records)
-            {
-                switch (r.type)
-                {
-                    case QuestRecordType.Completed: score += CompletedWeight; break;
-                    case QuestRecordType.Expired: score += ExpiredWeight; break;
-                    case QuestRecordType.MinorPenalty: score += MinorPenaltyWeight; break;
-                    case QuestRecordType.MajorPenalty: score += MajorPenaltyWeight; break;
-                    case QuestRecordType.MinorBonus: score += MinorBonusWeight; break;
-                    case QuestRecordType.CharityCompleted: score += CharityCompletedWeight; break;
-                    case QuestRecordType.CharityExpired: score += CharityExpiredWeight; break;
-                    case QuestRecordType.TinyBonus: score += TinyBonusWeight; break;
-                    case QuestRecordType.TinyPenalty: score += TinyPenaltyWeight; break;
-                }
-            }
+                score += GetPoints(r);
             return score;
         }
     }
 
     public List<QuestRecord> Records => records;
+
+    public int GetPoints(QuestRecord r)
+    {
+        switch (r.type)
+        {
+            case QuestRecordType.Completed: return CompletedWeight;
+            case QuestRecordType.Expired: return ExpiredWeight;
+            case QuestRecordType.MinorPenalty: return MinorPenaltyWeight;
+            case QuestRecordType.MajorPenalty: return MajorPenaltyWeight;
+            case QuestRecordType.MinorBonus: return MinorBonusWeight;
+            case QuestRecordType.CharityCompleted: return CharityCompletedWeight;
+            case QuestRecordType.CharityExpired: return CharityExpiredWeight;
+            case QuestRecordType.TinyBonus: return TinyBonusWeight;
+            case QuestRecordType.TinyPenalty: return TinyPenaltyWeight;
+            default: return 0;
+        }
+    }
 
     public void RecordQuest(string questName, int questId, QuestRecordType type, bool showMote = true)
     {
@@ -93,20 +97,8 @@ public class GameComponent_QuestPressure : GameComponent
 
         if (showMote)
         {
-            int points;
-            switch (type)
-            {
-                case QuestRecordType.Completed: points = CompletedWeight; break;
-                case QuestRecordType.CharityCompleted: points = CharityCompletedWeight; break;
-                case QuestRecordType.CharityExpired: points = CharityExpiredWeight; break;
-                case QuestRecordType.MinorPenalty: points = MinorPenaltyWeight; break;
-                case QuestRecordType.MajorPenalty: points = MajorPenaltyWeight; break;
-                case QuestRecordType.MinorBonus: points = MinorBonusWeight; break;
-                case QuestRecordType.TinyBonus: points = TinyBonusWeight; break;
-                case QuestRecordType.TinyPenalty: points = TinyPenaltyWeight; break;
-                default: points = ExpiredWeight; break;
-            }
-            ShowMoteOverLeader(points);
+            var last = records[records.Count - 1];
+            ShowMoteOverLeader(GetPoints(last));
         }
     }
 
