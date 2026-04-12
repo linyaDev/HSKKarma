@@ -84,7 +84,7 @@ public static class Patch_QuestCompleted
             if (__instance.charity)
                 comp.RecordQuest(name, __instance.id, QuestRecordType.CharityExpired);
             else
-                comp.RecordQuest(name, __instance.id, QuestRecordType.Expired);
+                comp.RecordQuest(name, __instance.id, QuestRecordType.Failed);
         }
     }
 
