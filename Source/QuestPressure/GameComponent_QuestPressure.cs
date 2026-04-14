@@ -16,7 +16,8 @@ public enum QuestRecordType : byte
     CharityExpired,    // -6 (charity quest expired)
     TinyBonus,         // +1 (e.g. allowed travelers)
     TinyPenalty,       // -1 (e.g. refused travelers)
-    Failed             // -3 (quest actively failed)
+    Failed,            // -3 (quest actively failed)
+    ShopPurchase       // -5 (bought resources)
 }
 
 public struct QuestRecord : IExposable
@@ -56,6 +57,7 @@ public class GameComponent_QuestPressure : GameComponent
     public const int CharityExpiredWeight = -6;
     public const int TinyBonusWeight = 1;
     public const int TinyPenaltyWeight = -1;
+    public const int ShopPurchaseWeight = -5;
 
     public int Score
     {
@@ -84,6 +86,7 @@ public class GameComponent_QuestPressure : GameComponent
             case QuestRecordType.TinyBonus: return TinyBonusWeight;
             case QuestRecordType.TinyPenalty: return TinyPenaltyWeight;
             case QuestRecordType.Failed: return FailedWeight;
+            case QuestRecordType.ShopPurchase: return ShopPurchaseWeight;
             default: return 0;
         }
     }

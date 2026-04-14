@@ -37,6 +37,11 @@
 	<QP_WildManArrived>Совместное существование с дикарём</QP_WildManArrived>
 	<QP_GuestsAllowed>Путешественники пропущены</QP_GuestsAllowed>
 	<QP_GuestsRefused>Путешественникам отказано</QP_GuestsRefused>
+	<QP_Shop>Обменять милосердие:</QP_Shop>
+	<QP_ShopPemmican>Пеммикан x{0} (-{1})</QP_ShopPemmican>
+	<QP_ShopMedicine>Аптечки x{0} (-{1})</QP_ShopMedicine>
+	<QP_ShopPurchase>Покупка за милосердие</QP_ShopPurchase>
+	<QP_ShopDelivery>{0} x{1} доставлено дроп-подом!</QP_ShopDelivery>
 	<QP_Edit>Ред.</QP_Edit>
 	<QP_Done>Готово</QP_Done>
 	<QP_Delete>Удалить</QP_Delete>

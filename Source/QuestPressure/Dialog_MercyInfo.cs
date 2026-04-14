@@ -88,12 +88,13 @@ public class Dialog_MercyInfo : Window
         // === Progress bar with colored stages ===
         y = DrawProgressBar(inRect, y, comp.Score);
 
+        // === Shop ===
+        y = DrawShop(inRect, y, comp);
+
         // Separator
         GUI.color = new Color(1f, 1f, 1f, 0.2f);
         Widgets.DrawLineHorizontal(0f, y, inRect.width);
         GUI.color = Color.white;
-        y += 4f;
-
         y += 4f;
 
         // Quest list
@@ -292,5 +293,70 @@ public class Dialog_MercyInfo : Window
         float nextThreshold = StageThresholds[currentStage];
         int nextScore = (int)(nextThreshold * 60f - 30f) - score + 1; // 60 = range, 30 = offset
         return Mathf.Max(0, nextScore);
+    }
+
+    // === Shop ===
+    private struct ShopItem
+    {
+        public string defName;
+        public int count;
+        public int cost;
+        public string labelKey;
+    }
+
+    private static readonly ShopItem[] shopItems = new ShopItem[]
+    {
+        new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
+        new ShopItem { defName = "MedicineIndustrial", count = 10, cost = 5, labelKey = "QP_ShopMedicine" },
+    };
+
+    private float DrawShop(Rect inRect, float y, GameComponent_QuestPressure comp)
+    {
+        GUI.color = new Color(0.8f, 0.7f, 0.3f);
+        Widgets.Label(new Rect(0f, y, inRect.width, 22f), "QP_Shop".Translate());
+        GUI.color = Color.white;
+        y += 24f;
+
+        float btnW = inRect.width / shopItems.Length - 4f;
+        float btnX = 0f;
+
+        for (int i = 0; i < shopItems.Length; i++)
+        {
+            var item = shopItems[i];
+            bool canAfford = comp.Score >= item.cost;
+
+            string label = item.labelKey.Translate(item.count, item.cost);
+
+            GUI.color = canAfford ? Color.white : new Color(1f, 1f, 1f, 0.4f);
+            if (Widgets.ButtonText(new Rect(btnX, y, btnW, 28f), label, active: canAfford) && canAfford)
+            {
+                SpendMercy(comp, item);
+            }
+            btnX += btnW + 4f;
+        }
+        GUI.color = Color.white;
+        y += 34f;
+
+        return y;
+    }
+
+    private void SpendMercy(GameComponent_QuestPressure comp, ShopItem item)
+    {
+        comp.RecordQuest("QP_ShopPurchase".Translate(), 0, QuestRecordType.ShopPurchase);
+
+        // Spawn items via drop pod
+        var map = Find.CurrentMap;
+        if (map == null) return;
+
+        ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(item.defName);
+        if (def == null) return;
+
+        Thing thing = ThingMaker.MakeThing(def);
+        thing.stackCount = item.count;
+
+        IntVec3 dropCell = DropCellFinder.TradeDropSpot(map);
+        DropPodUtility.DropThingsNear(dropCell, map, new[] { thing }, canRoofPunch: false, forbid: false);
+
+        Messages.Message("QP_ShopDelivery".Translate(thing.LabelCap, item.count), new TargetInfo(dropCell, map), MessageTypeDefOf.PositiveEvent);
     }
 }

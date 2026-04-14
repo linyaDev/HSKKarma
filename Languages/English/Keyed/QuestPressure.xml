@@ -37,6 +37,11 @@
 	<QP_WildManArrived>Coexistence with wild man</QP_WildManArrived>
 	<QP_GuestsAllowed>Travelers allowed through</QP_GuestsAllowed>
 	<QP_GuestsRefused>Travelers turned away</QP_GuestsRefused>
+	<QP_Shop>Trade mercy:</QP_Shop>
+	<QP_ShopPemmican>Pemmican x{0} (-{1})</QP_ShopPemmican>
+	<QP_ShopMedicine>Medicine x{0} (-{1})</QP_ShopMedicine>
+	<QP_ShopPurchase>Mercy purchase</QP_ShopPurchase>
+	<QP_ShopDelivery>{0} x{1} delivered by drop pod!</QP_ShopDelivery>
 	<QP_Edit>Edit</QP_Edit>
 	<QP_Done>Done</QP_Done>
 	<QP_Delete>Delete</QP_Delete>
