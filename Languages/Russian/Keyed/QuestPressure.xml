@@ -42,6 +42,11 @@
 	<QP_ShopMedicine>Аптечки x{0} (-{1})</QP_ShopMedicine>
 	<QP_ShopPurchase>Покупка за милосердие</QP_ShopPurchase>
 	<QP_ShopDelivery>{0} x{1} доставлено дроп-подом!</QP_ShopDelivery>
+	<QP_ShopButton>Обменять милосердие</QP_ShopButton>
+	<QP_ShopTitle>Обмен милосердия</QP_ShopTitle>
+	<QP_ShopBalance>Очков милосердия: {0}</QP_ShopBalance>
+	<QP_ShopPts>оч.</QP_ShopPts>
+	<QP_ShopBuy>Купить</QP_ShopBuy>
 	<QP_Edit>Ред.</QP_Edit>
 	<QP_Done>Готово</QP_Done>
 	<QP_Delete>Удалить</QP_Delete>

@@ -312,51 +312,11 @@ public class Dialog_MercyInfo : Window
 
     private float DrawShop(Rect inRect, float y, GameComponent_QuestPressure comp)
     {
-        GUI.color = new Color(0.8f, 0.7f, 0.3f);
-        Widgets.Label(new Rect(0f, y, inRect.width, 22f), "QP_Shop".Translate());
-        GUI.color = Color.white;
-        y += 24f;
-
-        float btnW = inRect.width / shopItems.Length - 4f;
-        float btnX = 0f;
-
-        for (int i = 0; i < shopItems.Length; i++)
+        if (Widgets.ButtonText(new Rect(0f, y, inRect.width, 30f), "QP_ShopButton".Translate()))
         {
-            var item = shopItems[i];
-            bool canAfford = comp.Score >= item.cost;
-
-            string label = item.labelKey.Translate(item.count, item.cost);
-
-            GUI.color = canAfford ? Color.white : new Color(1f, 1f, 1f, 0.4f);
-            if (Widgets.ButtonText(new Rect(btnX, y, btnW, 28f), label, active: canAfford) && canAfford)
-            {
-                SpendMercy(comp, item);
-            }
-            btnX += btnW + 4f;
+            Find.WindowStack.Add(new Dialog_MercyShop(comp));
         }
-        GUI.color = Color.white;
-        y += 34f;
-
+        y += 36f;
         return y;
-    }
-
-    private void SpendMercy(GameComponent_QuestPressure comp, ShopItem item)
-    {
-        comp.RecordQuest("QP_ShopPurchase".Translate(), 0, QuestRecordType.ShopPurchase);
-
-        // Spawn items via drop pod
-        var map = Find.CurrentMap;
-        if (map == null) return;
-
-        ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(item.defName);
-        if (def == null) return;
-
-        Thing thing = ThingMaker.MakeThing(def);
-        thing.stackCount = item.count;
-
-        IntVec3 dropCell = DropCellFinder.TradeDropSpot(map);
-        DropPodUtility.DropThingsNear(dropCell, map, new[] { thing }, canRoofPunch: false, forbid: false);
-
-        Messages.Message("QP_ShopDelivery".Translate(thing.LabelCap, item.count), new TargetInfo(dropCell, map), MessageTypeDefOf.PositiveEvent);
     }
 }
