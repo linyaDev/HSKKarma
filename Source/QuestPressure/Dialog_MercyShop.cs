@@ -7,6 +7,7 @@ namespace KarmaHSK;
 public class Dialog_MercyShop : Window
 {
     private readonly GameComponent_QuestPressure comp;
+    private readonly Rect parentRect;
 
     private static readonly Color GreenText = new Color(0.4f, 0.95f, 0.4f);
     private static readonly Color DimText = new Color(1f, 1f, 1f, 0.5f);
@@ -28,13 +29,27 @@ public class Dialog_MercyShop : Window
 
     public override Vector2 InitialSize => new Vector2(420f, 300f);
 
-    public Dialog_MercyShop(GameComponent_QuestPressure comp)
+    public Dialog_MercyShop(GameComponent_QuestPressure comp, Rect parentRect)
     {
         this.comp = comp;
+        this.parentRect = parentRect;
         doCloseButton = true;
         doCloseX = true;
         draggable = true;
         absorbInputAroundWindow = false;
+    }
+
+    public override void SetInitialSizeAndPosition()
+    {
+        base.SetInitialSizeAndPosition();
+        float x = parentRect.xMax + 10f;
+        float y = parentRect.y;
+        if (x + windowRect.width > UI.screenWidth)
+            x = parentRect.x - windowRect.width - 10f;
+        if (y + windowRect.height > UI.screenHeight)
+            y = UI.screenHeight - windowRect.height;
+        windowRect.x = x;
+        windowRect.y = y;
     }
 
     public override void DoWindowContents(Rect inRect)
@@ -86,10 +101,12 @@ public class Dialog_MercyShop : Window
             GUI.color = Color.white;
 
             // Buy button
-            if (Widgets.ButtonText(new Rect(inRect.width - 75f, y + 4f, 70f, 28f), "QP_ShopBuy".Translate(), active: canAfford) && canAfford)
+            GUI.color = canAfford ? Color.white : new Color(1f, 1f, 1f, 0.4f);
+            if (Widgets.ButtonText(new Rect(inRect.width - 75f, y + 4f, 70f, 28f), "QP_ShopBuy".Translate()) && canAfford)
             {
                 SpendMercy(item);
             }
+            GUI.color = Color.white;
 
             y += 38f;
         }

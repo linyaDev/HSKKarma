@@ -314,7 +314,7 @@ public class Dialog_MercyInfo : Window
     {
         if (Widgets.ButtonText(new Rect(0f, y, inRect.width, 30f), "QP_ShopButton".Translate()))
         {
-            Find.WindowStack.Add(new Dialog_MercyShop(comp));
+            Find.WindowStack.Add(new Dialog_MercyShop(comp, windowRect));
         }
         y += 36f;
         return y;

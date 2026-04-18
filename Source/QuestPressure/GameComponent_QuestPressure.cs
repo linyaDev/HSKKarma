@@ -110,25 +110,16 @@ public class GameComponent_QuestPressure : GameComponent
 
     private void ShowMoteOverLeader(int points)
     {
-        var leader = FindLeader();
-        if (leader == null || !leader.Spawned)
-            return;
-
         string text = (points > 0 ? "+" : "") + points + " " + "QP_MoteMercy".Translate();
         Color color = points > 0
             ? new Color(0.4f, 0.95f, 0.4f)
             : new Color(0.95f, 0.4f, 0.4f);
-        MoteMaker.ThrowText(leader.DrawPos, leader.Map, text, color);
-    }
 
-    private Pawn FindLeader()
-    {
         foreach (var p in PawnsFinder.AllMaps_FreeColonists)
         {
             if (p.Spawned)
-                return p;
+                MoteMaker.ThrowText(p.DrawPos, p.Map, text, color);
         }
-        return null;
     }
 
     public override void GameComponentTick()
