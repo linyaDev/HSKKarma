@@ -27,6 +27,7 @@ public struct QuestRecord : IExposable
     public string questName;
     public int questId;
     public QuestRecordType type;
+    public int customWeight;
 
     public void ExposeData()
     {
@@ -34,6 +35,7 @@ public struct QuestRecord : IExposable
         Scribe_Values.Look(ref questName, "questName");
         Scribe_Values.Look(ref questId, "questId", -1);
         Scribe_Values.Look(ref type, "type");
+        Scribe_Values.Look(ref customWeight, "customWeight");
     }
 }
 
@@ -43,7 +45,6 @@ public class GameComponent_QuestPressure : GameComponent
     private const int YearTicks = 3600000;
     public const float ScoreMax = 40f;
     private int cleanupCounter;
-    private int lastGuestsRefused;
 
     public GameComponent_QuestPressure(Game game) : base()
     {
@@ -77,6 +78,8 @@ public class GameComponent_QuestPressure : GameComponent
 
     public int GetPoints(QuestRecord r)
     {
+        if (r.customWeight != 0)
+            return r.customWeight;
         switch (r.type)
         {
             case QuestRecordType.Completed: return CompletedWeight;
@@ -95,14 +98,15 @@ public class GameComponent_QuestPressure : GameComponent
         }
     }
 
-    public void RecordQuest(string questName, int questId, QuestRecordType type, bool showMote = true)
+    public void RecordQuest(string questName, int questId, QuestRecordType type, bool showMote = true, int customWeight = 0)
     {
         records.Add(new QuestRecord
         {
             tick = Find.TickManager.TicksGame,
             questName = questName,
             questId = questId,
-            type = type
+            type = type,
+            customWeight = customWeight
         });
 
         if (showMote)
@@ -128,10 +132,6 @@ public class GameComponent_QuestPressure : GameComponent
 
     public override void GameComponentTick()
     {
-        // Check ABE guest refusals every game hour
-        if (cleanupCounter % 2500 == 0)
-            CheckGuestRefusals();
-
         cleanupCounter++;
         if (cleanupCounter < 60000)
             return;
@@ -141,53 +141,9 @@ public class GameComponent_QuestPressure : GameComponent
         records.RemoveAll(r => r.tick < cutoff);
     }
 
-    private System.Reflection.FieldInfo cachedRefusalField;
-    private GameComponent cachedRefusalTracker;
-    private bool refusalLookupDone;
-
-    private void CheckGuestRefusals()
-    {
-        if (!refusalLookupDone)
-        {
-            refusalLookupDone = true;
-            foreach (var comp in Current.Game.components)
-            {
-                if (comp.GetType().FullName == "AskBeforeEnter.GameComponent_RefusalTracker")
-                {
-                    cachedRefusalTracker = comp;
-                    cachedRefusalField = comp.GetType().GetField("guestsRefused");
-                    break;
-                }
-            }
-        }
-
-        if (cachedRefusalTracker == null || cachedRefusalField == null)
-            return;
-
-        int current = (int)cachedRefusalField.GetValue(cachedRefusalTracker);
-
-        try { System.IO.File.AppendAllText(@"D:\Mods\karma_debug.txt",
-            $"REFUSAL CHECK: current={current}, last={lastGuestsRefused}\n"); } catch { }
-
-        if (lastGuestsRefused == 0)
-        {
-            lastGuestsRefused = current;
-            return;
-        }
-
-        if (current > lastGuestsRefused)
-        {
-            int diff = current - lastGuestsRefused;
-            for (int i = 0; i < diff; i++)
-                RecordQuest("QP_GuestsRefused".Translate(), 0, QuestRecordType.TinyPenalty);
-        }
-        lastGuestsRefused = current;
-    }
-
     public override void ExposeData()
     {
         Scribe_Collections.Look(ref records, "records", LookMode.Deep);
-        Scribe_Values.Look(ref lastGuestsRefused, "lastGuestsRefused");
         if (records == null)
             records = new List<QuestRecord>();
     }

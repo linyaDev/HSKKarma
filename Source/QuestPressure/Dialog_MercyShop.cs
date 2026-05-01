@@ -114,7 +114,7 @@ public class Dialog_MercyShop : Window
 
     private void SpendMercy(ShopItem item)
     {
-        comp.RecordQuest("QP_ShopPurchase".Translate(), 0, QuestRecordType.ShopPurchase);
+        comp.RecordQuest("QP_ShopPurchase".Translate(), 0, QuestRecordType.ShopPurchase, customWeight: -item.cost);
 
         var map = Find.CurrentMap;
         if (map == null) return;
