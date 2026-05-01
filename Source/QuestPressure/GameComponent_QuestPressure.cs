@@ -17,7 +17,8 @@ public enum QuestRecordType : byte
     TinyBonus,         // +1 (e.g. allowed travelers)
     TinyPenalty,       // -1 (e.g. refused travelers)
     Failed,            // -3 (quest actively failed)
-    ShopPurchase       // -5 (bought resources)
+    ShopPurchase,      // -5 (bought resources)
+    ColonistKilled     // -10 (colonist killed by own colonist)
 }
 
 public struct QuestRecord : IExposable
@@ -59,6 +60,7 @@ public class GameComponent_QuestPressure : GameComponent
     public const int TinyBonusWeight = 1;
     public const int TinyPenaltyWeight = -1;
     public const int ShopPurchaseWeight = -5;
+    public const int ColonistKilledWeight = -10;
 
     public int Score
     {
@@ -88,6 +90,7 @@ public class GameComponent_QuestPressure : GameComponent
             case QuestRecordType.TinyPenalty: return TinyPenaltyWeight;
             case QuestRecordType.Failed: return FailedWeight;
             case QuestRecordType.ShopPurchase: return ShopPurchaseWeight;
+            case QuestRecordType.ColonistKilled: return ColonistKilledWeight;
             default: return 0;
         }
     }

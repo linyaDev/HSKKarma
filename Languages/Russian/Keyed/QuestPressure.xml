@@ -39,6 +39,7 @@
 	<QP_GuestsRefused>Путешественникам отказано</QP_GuestsRefused>
 	<QP_RefugeeAccepted>Беженцу дали убежище</QP_RefugeeAccepted>
 	<QP_RefugeeRejected>Беженцу отказано</QP_RefugeeRejected>
+	<QP_ColonistKilled>Колонист убит своими</QP_ColonistKilled>
 	<QP_Shop>Обменять милосердие:</QP_Shop>
 	<QP_ShopPemmican>Пеммикан x{0} (-{1})</QP_ShopPemmican>
 	<QP_ShopMedicine>Аптечки x{0} (-{1})</QP_ShopMedicine>
