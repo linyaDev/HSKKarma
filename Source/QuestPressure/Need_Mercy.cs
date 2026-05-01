@@ -7,8 +7,8 @@ namespace KarmaHSK;
 
 public class Need_Mercy : Need
 {
-    private const float ScoreMin = -30f;
-    private const float ScoreMax = 30f;
+    private static readonly float ScoreMin = -GameComponent_QuestPressure.ScoreMax;
+    private static readonly float ScoreMax = GameComponent_QuestPressure.ScoreMax;
 
     private static Texture2D cachedInfoIcon;
     private static Texture2D InfoIcon => cachedInfoIcon ??= ContentFinder<Texture2D>.Get("UI/Buttons/InfoButton", true);

@@ -37,6 +37,8 @@
 	<QP_WildManArrived>Coexistence with wild man</QP_WildManArrived>
 	<QP_GuestsAllowed>Travelers allowed through</QP_GuestsAllowed>
 	<QP_GuestsRefused>Travelers turned away</QP_GuestsRefused>
+	<QP_RefugeeAccepted>Refugee given shelter</QP_RefugeeAccepted>
+	<QP_RefugeeRejected>Refugee turned away</QP_RefugeeRejected>
 	<QP_Shop>Trade mercy:</QP_Shop>
 	<QP_ShopPemmican>Pemmican x{0} (-{1})</QP_ShopPemmican>
 	<QP_ShopMedicine>Medicine x{0} (-{1})</QP_ShopMedicine>

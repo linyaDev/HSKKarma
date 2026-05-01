@@ -210,8 +210,8 @@ public class Dialog_MercyInfo : Window
 
     private float DrawProgressBar(Rect inRect, float y, int score)
     {
-        const float ScoreMin = -30f;
-        const float ScoreMax = 30f;
+        float ScoreMax = GameComponent_QuestPressure.ScoreMax;
+        float ScoreMin = -ScoreMax;
         float barHeight = 18f;
         float barX = 20f;
         float barWidth = inRect.width - 40f;
@@ -291,7 +291,8 @@ public class Dialog_MercyInfo : Window
     {
         if (currentStage >= StageMoods.Length - 1) return 0;
         float nextThreshold = StageThresholds[currentStage];
-        int nextScore = (int)(nextThreshold * 60f - 30f) - score + 1; // 60 = range, 30 = offset
+        float max = GameComponent_QuestPressure.ScoreMax;
+        int nextScore = (int)(nextThreshold * max * 2f - max) - score + 1;
         return Mathf.Max(0, nextScore);
     }
 

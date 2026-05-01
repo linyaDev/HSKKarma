@@ -40,6 +40,7 @@ public class GameComponent_QuestPressure : GameComponent
 {
     private List<QuestRecord> records = new List<QuestRecord>();
     private const int YearTicks = 3600000;
+    public const float ScoreMax = 40f;
     private int cleanupCounter;
     private int lastGuestsRefused;
 
