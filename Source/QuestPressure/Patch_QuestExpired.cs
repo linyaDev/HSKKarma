@@ -49,7 +49,8 @@ public static class Patch_QuestExpired
             return;
 
         // Skip bugged quests (failed to generate properly)
-        if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0)
+        if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0
+            || (__instance.name != null && __instance.name.StartsWith("ERR:")))
         {
             Messages.Message("QP_BuggedQuestSkipped".Translate(__instance.name ?? "Unknown"), MessageTypeDefOf.NeutralEvent, false);
             return;
@@ -89,7 +90,8 @@ public static class Patch_QuestCompleted
                 return;
 
             // Skip bugged quests
-            if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0)
+            if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0
+                || (__instance.name != null && __instance.name.StartsWith("ERR:")))
             {
                 Messages.Message("QP_BuggedQuestSkipped".Translate(__instance.name ?? "Unknown"), MessageTypeDefOf.NeutralEvent, false);
                 return;

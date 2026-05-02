@@ -55,7 +55,7 @@ public class Dialog_MercyInfo : Window
             if (Widgets.ButtonInvisible(debugRect))
             {
                 if (!Find.WindowStack.TryRemove(typeof(Dialog_KarmaDebug), true))
-                    Find.WindowStack.Add(new Dialog_KarmaDebug());
+                    Find.WindowStack.Add(new Dialog_KarmaDebug(windowRect));
             }
         }
 
