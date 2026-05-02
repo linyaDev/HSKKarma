@@ -41,6 +41,24 @@ public class Dialog_MercyInfo : Window
         Widgets.Label(new Rect(0f, 0f, inRect.width, 35f), "QP_MercyHistory".Translate());
         Text.Font = GameFont.Small;
 
+        // Debug button (dev mode only)
+        if (Prefs.DevMode)
+        {
+            Rect debugRect = new Rect(inRect.width - 50f, 4f, 40f, 24f);
+            GUI.color = Mouse.IsOver(debugRect) ? Color.yellow : new Color(1f, 1f, 0.5f, 0.6f);
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(debugRect, "DBG");
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            if (Widgets.ButtonInvisible(debugRect))
+            {
+                if (!Find.WindowStack.TryRemove(typeof(Dialog_KarmaDebug), true))
+                    Find.WindowStack.Add(new Dialog_KarmaDebug());
+            }
+        }
+
         float y = 40f;
 
         // Stats summary

@@ -48,6 +48,13 @@ public static class Patch_QuestExpired
         if (__instance.root != null && excludedQuests.Contains(__instance.root.defName))
             return;
 
+        // Skip bugged quests (failed to generate properly)
+        if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0)
+        {
+            Messages.Message("QP_BuggedQuestSkipped".Translate(__instance.name ?? "Unknown"), MessageTypeDefOf.NeutralEvent, false);
+            return;
+        }
+
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         if (comp == null) return;
 
@@ -80,6 +87,13 @@ public static class Patch_QuestCompleted
             // Skip excluded quest types
             if (__instance.root != null && excludedQuests.Contains(__instance.root.defName))
                 return;
+
+            // Skip bugged quests
+            if (__instance.PartsListForReading == null || __instance.PartsListForReading.Count == 0)
+            {
+                Messages.Message("QP_BuggedQuestSkipped".Translate(__instance.name ?? "Unknown"), MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
 
             if (__instance.charity)
                 comp.RecordQuest(name, __instance.id, QuestRecordType.CharityExpired);

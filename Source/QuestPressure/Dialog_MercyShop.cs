@@ -23,7 +23,7 @@ public class Dialog_MercyShop : Window
 
     private static readonly ShopItem[] shopItems =
     {
-        new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
+        new ShopItem { defName = "Pemmican", count = 300, cost = 2, labelKey = "QP_ShopPemmican" },
         new ShopItem { defName = "MedicineIndustrial", count = 3, cost = 5, labelKey = "QP_ShopMedicine" },
     };
 
