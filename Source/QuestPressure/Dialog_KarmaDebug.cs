@@ -85,6 +85,37 @@ public class Dialog_KarmaDebug : Window
             y += 26f;
         }
 
+        // Settings impact
+        GUI.color = new Color(1f, 1f, 0.7f);
+        Widgets.Label(new Rect(0f, y, w, 22f), "--- Quest Settings ---");
+        GUI.color = Color.white;
+        y += 24f;
+
+        var settings = QuestPressureMod.Settings;
+        if (settings != null)
+        {
+            Widgets.Label(new Rect(0f, y, w, 20f), "Threat multiplier: " + (settings.threatMultiplier * 100f).ToString("F0") + "%");
+            y += 20f;
+            Widgets.Label(new Rect(0f, y, w, 20f), "Reward multiplier: " + (settings.rewardMultiplier * 100f).ToString("F0") + "%");
+            y += 20f;
+
+            // Current storyteller points
+            var map = Find.CurrentMap;
+            if (map != null)
+            {
+                float rawPoints = StorytellerUtility.DefaultThreatPointsNow(map);
+                float adjustedPoints = rawPoints * settings.threatMultiplier;
+                Widgets.Label(new Rect(0f, y, w, 20f), "Raw threat points: " + rawPoints.ToString("F0"));
+                y += 20f;
+                Widgets.Label(new Rect(0f, y, w, 20f), "After multiplier: " + adjustedPoints.ToString("F0"));
+                y += 20f;
+                Widgets.Label(new Rect(0f, y, w, 20f), "Colonists: " + map.mapPawns.FreeColonistsSpawnedCount);
+                y += 20f;
+            }
+        }
+
+        y += 6f;
+
         // Active quests
         GUI.color = new Color(1f, 1f, 0.7f);
         Widgets.Label(new Rect(0f, y, w, 22f), "--- Active Quests ---");

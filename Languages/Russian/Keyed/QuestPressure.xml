@@ -20,7 +20,7 @@
 	<QP_WastepackBase>Базовый множитель мешков</QP_WastepackBase>
 	<QP_WastepackNeolithic>Доп. множитель (Неолит)</QP_WastepackNeolithic>
 	<QP_WastepackMedieval>Доп. множитель (Средневековье)</QP_WastepackMedieval>
-	<QP_MoteMercy>милость</QP_MoteMercy>
+	<QP_MoteMercy>карма</QP_MoteMercy>
 	<QP_Stage0>бессердечные</QP_Stage0>
 	<QP_Stage1>жестокие</QP_Stage1>
 	<QP_Stage2>безразличные</QP_Stage2>
@@ -42,14 +42,14 @@
 	<QP_ColonistKilled>Колонист убит своими</QP_ColonistKilled>
 	<QP_GuestsAlreadyPresent>Квест пропущен — в колонии уже есть гости.</QP_GuestsAlreadyPresent>
 	<QP_BuggedQuestSkipped>Багнутый квест "{0}" пропущен — без штрафа кармы.</QP_BuggedQuestSkipped>
-	<QP_Shop>Обменять милосердие:</QP_Shop>
+	<QP_Shop>Обменять карму:</QP_Shop>
 	<QP_ShopPemmican>Пеммикан x{0} (-{1})</QP_ShopPemmican>
 	<QP_ShopMedicine>Аптечки x{0} (-{1})</QP_ShopMedicine>
 	<QP_ShopPurchase>Покупка за милосердие</QP_ShopPurchase>
 	<QP_ShopDelivery>{0} x{1} доставлено дроп-подом!</QP_ShopDelivery>
-	<QP_ShopButton>Обменять милосердие</QP_ShopButton>
-	<QP_ShopTitle>Обмен милосердия</QP_ShopTitle>
-	<QP_ShopBalance>Очков милосердия: {0}</QP_ShopBalance>
+	<QP_ShopButton>Обменять карму</QP_ShopButton>
+	<QP_ShopTitle>Обмен кармы</QP_ShopTitle>
+	<QP_ShopBalance>Очков кармы: {0}</QP_ShopBalance>
 	<QP_ShopPts>оч.</QP_ShopPts>
 	<QP_ShopBuy>Купить</QP_ShopBuy>
 	<QP_Edit>Ред.</QP_Edit>
