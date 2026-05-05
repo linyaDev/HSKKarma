@@ -55,7 +55,9 @@ public static class Patch_RefugeeChased
         var settings = QuestPressureMod.Settings;
         if (settings != null && parms != null)
         {
+            float original = parms.points;
             parms.points *= settings.threatMultiplier;
+            Log.Message($"[KarmaHSK] Refugee raid threat reduced: {original:F0} -> {parms.points:F0} (x{settings.threatMultiplier})");
         }
 
         // Wrap Accept action (first option) with karma bonus

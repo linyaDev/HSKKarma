@@ -37,5 +37,7 @@ public static class Patch_WastepackCount
 
         int newCount = Mathf.Max(Mathf.RoundToInt(count * multiplier), 10);
         slate.Set("wastepackCount", newCount);
+        Log.Message($"[KarmaHSK] Wastepack reduced: {count} -> {newCount} (x{multiplier:F2})");
+
     }
 }

@@ -123,7 +123,9 @@ public static class Patch_QuestThreatMultiplier
         if (settings == null)
             return;
 
+        float original = __result.points;
         __result.points *= settings.threatMultiplier;
+        Log.Message($"[KarmaHSK] Threat reduced: {original:F0} -> {__result.points:F0} (x{settings.threatMultiplier})");
     }
 }
 
@@ -138,6 +140,8 @@ public static class Patch_QuestRewardMultiplier
         if (settings == null)
             return;
 
+        float original = parms.rewardValue;
         parms.rewardValue *= settings.rewardMultiplier;
+        Log.Message($"[KarmaHSK] Reward reduced: {original:F0} -> {parms.rewardValue:F0} (x{settings.rewardMultiplier})");
     }
 }
