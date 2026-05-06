@@ -40,6 +40,9 @@
 	<QP_RefugeeAccepted>Refugee given shelter</QP_RefugeeAccepted>
 	<QP_RefugeeRejected>Refugee turned away</QP_RefugeeRejected>
 	<QP_ColonistKilled>Colonist killed by own</QP_ColonistKilled>
+
+	<!-- Quest name overrides -->
+	<QP_QuestName_WandererJoinAbasia>Wanderer with abasia</QP_QuestName_WandererJoinAbasia>
 	<QP_GuestsAlreadyPresent>Quest skipped — guests already present in colony.</QP_GuestsAlreadyPresent>
 	<QP_BuggedQuestSkipped>Bugged quest "{0}" skipped — no karma penalty.</QP_BuggedQuestSkipped>
 	<QP_Shop>Trade mercy:</QP_Shop>

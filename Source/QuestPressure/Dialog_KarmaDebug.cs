@@ -159,6 +159,24 @@ public class Dialog_KarmaDebug : Window
             y += 4f;
         }
 
+        // Debug event log
+        if (GameComponent_QuestPressure.DebugLog.Count > 0)
+        {
+            y += 6f;
+            GUI.color = new Color(1f, 1f, 0.7f);
+            Widgets.Label(new Rect(0f, y, w, 22f), "--- Event Log ---");
+            GUI.color = Color.white;
+            y += 24f;
+
+            Text.Font = GameFont.Tiny;
+            for (int i = GameComponent_QuestPressure.DebugLog.Count - 1; i >= 0; i--)
+            {
+                Widgets.Label(new Rect(0f, y, w, 18f), GameComponent_QuestPressure.DebugLog[i]);
+                y += 18f;
+            }
+            Text.Font = GameFont.Small;
+        }
+
         Widgets.EndScrollView();
     }
 }

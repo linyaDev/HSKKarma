@@ -12,6 +12,26 @@ public class Dialog_MercyInfo : Window
     private HashSet<int> selectedIndices = new HashSet<int>();
     private bool editMode;
 
+    private static readonly Dictionary<string, string> questNameOverrides = new Dictionary<string, string>
+    {
+        { "WandererJoinAbasia", "QP_QuestName_WandererJoinAbasia" },
+    };
+
+    private static string PrettyQuestName(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return "Unknown";
+        // Check exact match first
+        if (questNameOverrides.TryGetValue(name, out string key))
+            return key.Translate();
+        // Check if name contains a known key
+        foreach (var kv in questNameOverrides)
+        {
+            if (name.Contains(kv.Key))
+                return kv.Value.Translate();
+        }
+        return name;
+    }
+
     private static readonly Color GreenBg = new Color(0.2f, 0.5f, 0.2f, 0.3f);
     private static readonly Color RedBg = new Color(0.5f, 0.2f, 0.2f, 0.3f);
     private static readonly Color SelectedBg = new Color(0.3f, 0.3f, 0.8f, 0.4f);
@@ -175,12 +195,11 @@ public class Dialog_MercyInfo : Window
             // Quest name (truncate to 1 line)
             GUI.color = Color.white;
             float nameWidth = viewRect.width - 170f;
-            string questName = r.questName;
-            if (questName.Length > 25)
-                questName = questName.Substring(0, 22) + "...";
-            Widgets.Label(new Rect(25f, rowY, nameWidth, 28f), questName);
-            if (r.questName.Length > 25 && Mouse.IsOver(new Rect(25f, rowY, nameWidth, 28f)))
-                TooltipHandler.TipRegion(new Rect(25f, rowY, nameWidth, 28f), r.questName);
+            string questName = PrettyQuestName(r.questName);
+            string displayName = questName.Length > 25 ? questName.Substring(0, 22) + "..." : questName;
+            Widgets.Label(new Rect(25f, rowY, nameWidth, 28f), displayName);
+            if (questName.Length > 25 && Mouse.IsOver(new Rect(25f, rowY, nameWidth, 28f)))
+                TooltipHandler.TipRegion(new Rect(25f, rowY, nameWidth, 28f), questName);
 
             // Points
             GUI.color = isPositive ? GreenText : RedText;

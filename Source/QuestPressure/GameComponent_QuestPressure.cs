@@ -61,7 +61,7 @@ public class GameComponent_QuestPressure : GameComponent
     public const int TinyBonusWeight = 1;
     public const int TinyPenaltyWeight = -1;
     public const int ShopPurchaseWeight = -5;
-    public const int ColonistKilledWeight = -10;
+    public const int ColonistKilledWeight = -5;
 
     public int Score
     {
@@ -75,6 +75,16 @@ public class GameComponent_QuestPressure : GameComponent
     }
 
     public List<QuestRecord> Records => records;
+
+    // Debug event log (not saved, session-only)
+    public static List<string> DebugLog = new List<string>();
+
+    public static void LogDebug(string msg)
+    {
+        DebugLog.Add($"[{GenTicks.TicksGame}] {msg}");
+        if (DebugLog.Count > 50)
+            DebugLog.RemoveAt(0);
+    }
 
     public int GetPoints(QuestRecord r)
     {
