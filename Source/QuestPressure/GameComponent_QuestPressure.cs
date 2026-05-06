@@ -13,7 +13,8 @@ public enum QuestRecordType : byte
     MajorPenalty,      // -4 (e.g. killing wild man)
     MinorBonus,        // +2 (e.g. wild man spotted)
     CharityCompleted,  // +5 (charity quest)
-    CharityExpired,    // -6 (charity quest expired)
+    CharityExpired,    // -4 (charity quest expired)
+    CharityFailed,     // -5 (charity quest failed)
     TinyBonus,         // +1 (e.g. allowed travelers)
     TinyPenalty,       // -1 (e.g. refused travelers)
     Failed,            // -3 (quest actively failed)
@@ -56,11 +57,11 @@ public class GameComponent_QuestPressure : GameComponent
     public const int MinorPenaltyWeight = -1;
     public const int MajorPenaltyWeight = -4;
     public const int MinorBonusWeight = 1;
-    public const int CharityCompletedWeight = 4;
-    public const int CharityExpiredWeight = -6;
+    public const int CharityCompletedWeight = 3;
+    public const int CharityExpiredWeight = -4;
+    public const int CharityFailedWeight = -5;
     public const int TinyBonusWeight = 1;
     public const int TinyPenaltyWeight = -1;
-    public const int ShopPurchaseWeight = -5;
     public const int ColonistKilledWeight = -5;
 
     public int Score
@@ -99,10 +100,11 @@ public class GameComponent_QuestPressure : GameComponent
             case QuestRecordType.MinorBonus: return MinorBonusWeight;
             case QuestRecordType.CharityCompleted: return CharityCompletedWeight;
             case QuestRecordType.CharityExpired: return CharityExpiredWeight;
+            case QuestRecordType.CharityFailed: return CharityFailedWeight;
             case QuestRecordType.TinyBonus: return TinyBonusWeight;
             case QuestRecordType.TinyPenalty: return TinyPenaltyWeight;
             case QuestRecordType.Failed: return FailedWeight;
-            case QuestRecordType.ShopPurchase: return ShopPurchaseWeight;
+            case QuestRecordType.ShopPurchase: return 0; // uses customWeight
             case QuestRecordType.ColonistKilled: return ColonistKilledWeight;
             default: return 0;
         }

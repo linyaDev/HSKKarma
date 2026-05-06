@@ -98,7 +98,7 @@ public static class Patch_QuestCompleted
             }
 
             if (__instance.charity)
-                comp.RecordQuest(name, __instance.id, QuestRecordType.CharityExpired);
+                comp.RecordQuest(name, __instance.id, QuestRecordType.CharityFailed);
             else
                 comp.RecordQuest(name, __instance.id, QuestRecordType.Failed);
         }
@@ -125,7 +125,10 @@ public static class Patch_QuestThreatMultiplier
 
         float original = __result.points;
         __result.points *= settings.threatMultiplier;
-        Log.Message($"[KarmaHSK] Threat reduced: {original:F0} -> {__result.points:F0} (x{settings.threatMultiplier})");
+        string questInfo = __result.questScriptDef?.defName ?? __result.quest?.name ?? "?";
+        string msg = $"Quest points reduced: {original:F0} -> {__result.points:F0} (x{settings.threatMultiplier}), quest: {questInfo}";
+        Log.Message($"[KarmaHSK] {msg}");
+        GameComponent_QuestPressure.LogDebug(msg);
     }
 }
 
@@ -142,6 +145,8 @@ public static class Patch_QuestRewardMultiplier
 
         float original = parms.rewardValue;
         parms.rewardValue *= settings.rewardMultiplier;
-        Log.Message($"[KarmaHSK] Reward reduced: {original:F0} -> {parms.rewardValue:F0} (x{settings.rewardMultiplier})");
+        string msg = $"Reward reduced: {original:F0} -> {parms.rewardValue:F0} (x{settings.rewardMultiplier})";
+        Log.Message($"[KarmaHSK] {msg}");
+        GameComponent_QuestPressure.LogDebug(msg);
     }
 }
