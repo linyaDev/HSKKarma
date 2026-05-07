@@ -142,6 +142,8 @@ public class GameComponent_QuestPressure : GameComponent
         }
     }
 
+    private int nextYearlyTick;
+
     public override void GameComponentTick()
     {
         cleanupCounter++;
@@ -149,8 +151,38 @@ public class GameComponent_QuestPressure : GameComponent
             return;
         cleanupCounter = 0;
 
-        int cutoff = Find.TickManager.TicksGame - YearTicks;
-        records.RemoveAll(r => r.tick < cutoff);
+        // Yearly compression
+        int ticksNow = Find.TickManager.TicksGame;
+        if (nextYearlyTick <= 0)
+        {
+            nextYearlyTick = ticksNow + YearTicks;
+        }
+        else if (ticksNow >= nextYearlyTick)
+        {
+            nextYearlyTick = ticksNow + YearTicks;
+            CompressYearlyRecords();
+        }
+    }
+
+    private void CompressYearlyRecords()
+    {
+        if (records.Count <= 1) return;
+
+        int totalScore = 0;
+        foreach (var r in records)
+            totalScore += GetPoints(r);
+
+        records.Clear();
+        records.Add(new QuestRecord
+        {
+            tick = Find.TickManager.TicksGame,
+            questName = "QP_YearlySummary".Translate(GenDate.Year(Find.TickManager.TicksAbs, 0)),
+            questId = 0,
+            type = totalScore >= 0 ? QuestRecordType.Completed : QuestRecordType.Expired,
+            customWeight = totalScore
+        });
+
+        LogDebug($"Yearly compression: {totalScore} total karma");
     }
 
     public override void ExposeData()
@@ -158,5 +190,6 @@ public class GameComponent_QuestPressure : GameComponent
         Scribe_Collections.Look(ref records, "records", LookMode.Deep);
         if (records == null)
             records = new List<QuestRecord>();
+        Scribe_Values.Look(ref nextYearlyTick, "nextYearlyTick");
     }
 }

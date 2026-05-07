@@ -43,6 +43,7 @@
 
 	<!-- Quest name overrides -->
 	<QP_QuestName_WandererJoinAbasia>Бродяга с абазией</QP_QuestName_WandererJoinAbasia>
+	<QP_YearlySummary>Итог года {0}</QP_YearlySummary>
 	<QP_GuestsAlreadyPresent>Квест пропущен — в колонии уже есть гости.</QP_GuestsAlreadyPresent>
 	<QP_BuggedQuestSkipped>Багнутый квест "{0}" пропущен — без штрафа кармы.</QP_BuggedQuestSkipped>
 	<QP_Shop>Обменять карму:</QP_Shop>
