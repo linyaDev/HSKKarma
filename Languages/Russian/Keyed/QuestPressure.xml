@@ -55,6 +55,10 @@
 	<QP_ShopBalance>Очков кармы: {0}</QP_ShopBalance>
 	<QP_ShopPts>оч.</QP_ShopPts>
 	<QP_ShopBuy>Купить</QP_ShopBuy>
+	<QP_ShopReinforce>Вызвать подкрепление (-{0})</QP_ShopReinforce>
+	<QP_ShopReinforce_Record>Подкрепление вызвано</QP_ShopReinforce_Record>
+	<QP_ShopReinforceSent>{0} бойцов прибыли на помощь!</QP_ShopReinforceSent>
+	<QP_ShopNoRaid>Нет активного рейда</QP_ShopNoRaid>
 	<QP_Edit>Ред.</QP_Edit>
 	<QP_Done>Готово</QP_Done>
 	<QP_Delete>Удалить</QP_Delete>

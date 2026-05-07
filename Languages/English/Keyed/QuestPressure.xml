@@ -55,6 +55,10 @@
 	<QP_ShopBalance>Mercy points: {0}</QP_ShopBalance>
 	<QP_ShopPts>pts</QP_ShopPts>
 	<QP_ShopBuy>Buy</QP_ShopBuy>
+	<QP_ShopReinforce>Call reinforcements (-{0})</QP_ShopReinforce>
+	<QP_ShopReinforce_Record>Reinforcements called</QP_ShopReinforce_Record>
+	<QP_ShopReinforceSent>{0} fighters arrived to help!</QP_ShopReinforceSent>
+	<QP_ShopNoRaid>No active raid</QP_ShopNoRaid>
 	<QP_Edit>Edit</QP_Edit>
 	<QP_Done>Done</QP_Done>
 	<QP_Delete>Delete</QP_Delete>

@@ -137,6 +137,8 @@ public static class Patch_QuestThreatMultiplier
     new[] { ArgumentType.Normal, ArgumentType.Out })]
 public static class Patch_QuestRewardMultiplier
 {
+    private static int lastLogTick = -1;
+
     public static void Prefix(ref RewardsGeneratorParams parms)
     {
         var settings = QuestPressureMod.Settings;
@@ -145,8 +147,14 @@ public static class Patch_QuestRewardMultiplier
 
         float original = parms.rewardValue;
         parms.rewardValue *= settings.rewardMultiplier;
-        string msg = $"Reward reduced: {original:F0} -> {parms.rewardValue:F0} (x{settings.rewardMultiplier})";
-        Log.Message($"[KarmaHSK] {msg}");
-        GameComponent_QuestPressure.LogDebug(msg);
+
+        int tick = Find.TickManager?.TicksGame ?? -1;
+        if (tick != lastLogTick)
+        {
+            lastLogTick = tick;
+            string msg = $"Reward reduced: {original:F0} -> {parms.rewardValue:F0} (x{settings.rewardMultiplier})";
+            Log.Message($"[KarmaHSK] {msg}");
+            GameComponent_QuestPressure.LogDebug(msg);
+        }
     }
 }

@@ -124,8 +124,7 @@ public class Dialog_KarmaDebug : Window
 
         foreach (var quest in Find.QuestManager.QuestsListForReading)
         {
-            if (quest.State == QuestState.EndedSuccess || quest.State == QuestState.EndedFailed ||
-                quest.State == QuestState.EndedUnknownOutcome)
+            if (quest.State != QuestState.NotYetAccepted && quest.State != QuestState.Ongoing)
                 continue;
 
             int parts = quest.PartsListForReading?.Count ?? 0;
