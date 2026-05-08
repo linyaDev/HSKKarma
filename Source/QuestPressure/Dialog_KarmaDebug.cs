@@ -111,6 +111,8 @@ public class Dialog_KarmaDebug : Window
                 y += 20f;
                 Widgets.Label(new Rect(0f, y, w, 20f), "Colonists: " + map.mapPawns.FreeColonistsSpawnedCount);
                 y += 20f;
+                Widgets.Label(new Rect(0f, y, w, 20f), "Player tech level: " + Faction.OfPlayer.def.techLevel);
+                y += 20f;
             }
         }
 

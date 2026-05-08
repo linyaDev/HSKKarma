@@ -9,20 +9,22 @@ namespace KarmaHSK;
 [HarmonyPatch(typeof(QuestNode_Root_PollutionDump), "RunInt")]
 public static class Patch_WastepackCount
 {
-    public static void Postfix()
+    private static float originalPoints;
+
+    public static void Prefix()
     {
         var settings = QuestPressureMod.Settings;
         if (settings == null || !settings.nerfWastepacks)
             return;
 
         var slate = QuestGen.slate;
-        if (!slate.TryGet<int>("wastepackCount", out int count))
+        if (!slate.TryGet<float>("points", out float points))
             return;
 
-        // Base reduction
+        originalPoints = points;
+
         float multiplier = settings.wastepackBaseMultiplier;
 
-        // Epoch reduction
         var techLevel = Faction.OfPlayer?.def?.techLevel ?? TechLevel.Industrial;
         switch (techLevel)
         {
@@ -33,11 +35,27 @@ public static class Patch_WastepackCount
             case TechLevel.Medieval:
                 multiplier *= settings.wastepackMedievalMult;
                 break;
+            case TechLevel.Industrial:
+                multiplier *= settings.wastepackIndustrialMult;
+                break;
         }
 
-        int newCount = Mathf.Max(Mathf.RoundToInt(count * multiplier), 10);
-        slate.Set("wastepackCount", newCount);
-        Log.Message($"[KarmaHSK] Wastepack reduced: {count} -> {newCount} (x{multiplier:F2})");
+        float newPoints = points * multiplier;
+        slate.Set("points", newPoints);
+        GameComponent_QuestPressure.LogDebug(
+            $"Wastepack points reduced: {points:F0} -> {newPoints:F0} (x{multiplier:F2})");
+    }
 
+    public static void Postfix()
+    {
+        var settings = QuestPressureMod.Settings;
+        if (settings == null || !settings.nerfWastepacks)
+            return;
+
+        if (originalPoints > 0f)
+        {
+            QuestGen.slate.Set("points", originalPoints);
+            originalPoints = 0f;
+        }
     }
 }

@@ -16,16 +16,17 @@ Colony karma system tracking moral decisions (quests, wild men, travelers, refug
 | Quest completed | +2 | Completed |
 | Quest expired | -3 | Expired |
 | Quest failed | -4 | Failed |
-| Charity quest completed | +4 | CharityCompleted |
-| Charity quest expired | -6 | CharityExpired |
-| Refugee accepted (HSK) | +5 | CharityCompleted |
-| Refugee rejected (HSK) | -6 | CharityExpired |
+| Charity quest completed | +3 | CharityCompleted |
+| Charity quest expired | -4 | CharityExpired |
+| Charity quest failed | -5 | CharityFailed |
+| Refugee accepted (HSK) | +3 | CharityCompleted |
+| Refugee rejected (HSK) | -4 | CharityExpired |
 | Wild man killed | -4 | MajorPenalty |
 | Wild man wounded | -1 | MinorPenalty |
 | Wild man arrived | +1 | MinorBonus |
 | Traveler allowed | +1 | TinyBonus |
 | Traveler refused | -1 | TinyPenalty |
-| Colonist killed by own | -10 | ColonistKilled |
+| Colonist killed by own | -5 | ColonistKilled |
 | Shop purchase | customWeight | ShopPurchase |
 
 ### Quest Balancing (Settings)
