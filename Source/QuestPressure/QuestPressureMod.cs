@@ -9,7 +9,7 @@ namespace KarmaHSK;
 public class QuestPressureMod : Mod
 {
     public static QuestPressureSettings Settings;
-    private Vector2 factionScrollPos;
+    private Vector2 scrollPos;
 
     public QuestPressureMod(ModContentPack content) : base(content)
     {
@@ -18,98 +18,43 @@ public class QuestPressureMod : Mod
 
     public override void DoSettingsWindowContents(Rect inRect)
     {
+        Rect scrollArea = new Rect(0f, 0f, inRect.width, inRect.height);
+        Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 800f);
+        Widgets.BeginScrollView(scrollArea, ref scrollPos, viewRect);
+
         var list = new Listing_Standard();
-        list.ColumnWidth = inRect.width;
-        list.Begin(inRect);
+        list.ColumnWidth = viewRect.width;
+        list.Begin(viewRect);
 
-        string threatLabel = "QP_ThreatMultiplier".Translate() + ": " + Settings.threatMultiplier.ToString("F2");
-        string rewardLabel = "QP_RewardMultiplier".Translate() + ": " + Settings.rewardMultiplier.ToString("F2");
+        // === Threat & Reward ===
+        SectionHeader(list, "QP_ThreatRewardSection".Translate());
 
-#if V15
-        list.Label(threatLabel, -1f, (string)null);
-#else
-        list.Label(threatLabel, -1f, (TipSignal?)null);
-#endif
-        Settings.threatMultiplier = list.Slider(Settings.threatMultiplier, 0.1f, 2.0f);
+        InputLabeled(list, "QP_ThreatMultiplier".Translate(), ref Settings.threatMultiplier, 0.1f, 2.0f, pct: true);
+        InputLabeled(list, "QP_RewardMultiplier".Translate(), ref Settings.rewardMultiplier, 0.1f, 3.0f, pct: true);
 
-        list.Gap(6f);
-
-#if V15
-        list.Label(rewardLabel, -1f, (string)null);
-#else
-        list.Label(rewardLabel, -1f, (TipSignal?)null);
-#endif
-        Settings.rewardMultiplier = list.Slider(Settings.rewardMultiplier, 0.1f, 3.0f);
-
-        list.GapLine();
-
-        // === Quests section ===
-#if V15
-        list.Label("QP_QuestSection".Translate(), -1f, (string)null);
-#else
-        list.Label("QP_QuestSection".Translate(), -1f, (TipSignal?)null);
-#endif
-        list.Gap(4f);
+        // === Quests ===
+        SectionHeader(list, "QP_QuestSection".Translate());
 
         list.CheckboxLabeled("QP_LimitRefugees".Translate(), ref Settings.limitRefugees, "QP_LimitRefugeesTooltip".Translate());
         if (Settings.limitRefugees)
         {
-            string maxLabel = "QP_MaxRefugees".Translate() + ": " + Settings.maxRefugees;
-#if V15
-            list.Label(maxLabel, -1f, (string)null);
-#else
-            list.Label(maxLabel, -1f, (TipSignal?)null);
-#endif
-            Settings.maxRefugees = (int)list.Slider(Settings.maxRefugees, 1f, 10f);
-
-            string helpersLabel = "QP_MaxHelpers".Translate() + ": " + Settings.maxHelpers;
-#if V15
-            list.Label(helpersLabel, -1f, (string)null);
-#else
-            list.Label(helpersLabel, -1f, (TipSignal?)null);
-#endif
-            Settings.maxHelpers = (int)list.Slider(Settings.maxHelpers, 1f, 6f);
+            InputLabeled(list, "QP_MaxRefugees".Translate(), ref Settings.maxRefugees, 1, 10);
+            InputLabeled(list, "QP_MaxHelpers".Translate(), ref Settings.maxHelpers, 1, 6);
         }
 
-        list.Gap(6f);
-
+        // === Wastepacks ===
+        list.Gap(4f);
         list.CheckboxLabeled("QP_NerfWastepacks".Translate(), ref Settings.nerfWastepacks, "QP_NerfWastepacksTooltip".Translate());
         if (Settings.nerfWastepacks)
         {
-            string baseLabel = "QP_WastepackBase".Translate() + ": " + (Settings.wastepackBaseMultiplier * 100f).ToString("F0") + "%";
-#if V15
-            list.Label(baseLabel, -1f, (string)null);
-#else
-            list.Label(baseLabel, -1f, (TipSignal?)null);
-#endif
-            Settings.wastepackBaseMultiplier = Mathf.Round(list.Slider(Settings.wastepackBaseMultiplier, 0.1f, 1.0f) * 10f) / 10f;
-
-            string neoLabel = "QP_WastepackNeolithic".Translate() + ": " + (Settings.wastepackNeolithicMult * 100f).ToString("F0") + "%";
-#if V15
-            list.Label(neoLabel, -1f, (string)null);
-#else
-            list.Label(neoLabel, -1f, (TipSignal?)null);
-#endif
-            Settings.wastepackNeolithicMult = Mathf.Round(list.Slider(Settings.wastepackNeolithicMult, 0.1f, 1.0f) * 10f) / 10f;
-
-            string medLabel = "QP_WastepackMedieval".Translate() + ": " + (Settings.wastepackMedievalMult * 100f).ToString("F0") + "%";
-#if V15
-            list.Label(medLabel, -1f, (string)null);
-#else
-            list.Label(medLabel, -1f, (TipSignal?)null);
-#endif
-            Settings.wastepackMedievalMult = Mathf.Round(list.Slider(Settings.wastepackMedievalMult, 0.1f, 1.0f) * 10f) / 10f;
+            InputLabeled(list, "QP_WastepackBase".Translate(), ref Settings.wastepackBaseMultiplier, 0.1f, 1.0f, pct: true);
+            InputLabeled(list, "QP_WastepackNeolithic".Translate(), ref Settings.wastepackNeolithicMult, 0.1f, 1.0f, pct: true);
+            InputLabeled(list, "QP_WastepackMedieval".Translate(), ref Settings.wastepackMedievalMult, 0.1f, 1.0f, pct: true);
         }
 
-        list.GapLine();
+        // === Site Factions ===
+        SectionHeader(list, "QP_SiteFactions".Translate());
 
-        // === Site Faction Filter ===
-#if V15
-        list.Label("QP_SiteFactions".Translate(), -1f, (string)null);
-#else
-        list.Label("QP_SiteFactions".Translate(), -1f, (TipSignal?)null);
-#endif
-        list.Gap(4f);
         list.CheckboxLabeled("QP_SiteFactionAuto".Translate(), ref Settings.siteFactionAutoMode, "QP_SiteFactionAutoTooltip".Translate());
 
         if (!Settings.siteFactionAutoMode && Current.Game != null)
@@ -121,38 +66,87 @@ public class QuestPressureMod : Mod
                 .ThenBy(f => f.Name)
                 .ToList();
 
-            float checkboxH = factions.Count * 26f + 60f;
-            Rect scrollRect = list.GetRect(Mathf.Min(checkboxH, 200f));
-            Rect viewRect = new Rect(0f, 0f, scrollRect.width - 16f, checkboxH);
-            Widgets.BeginScrollView(scrollRect, ref factionScrollPos, viewRect);
-
-            float y = 0f;
             TechLevel lastTech = TechLevel.Undefined;
             foreach (var faction in factions)
             {
                 if (faction.def.techLevel != lastTech)
                 {
                     lastTech = faction.def.techLevel;
+                    list.Gap(4f);
                     GUI.color = new Color(1f, 1f, 0.7f);
-                    Widgets.Label(new Rect(0f, y, viewRect.width, 22f), "— " + lastTech.ToStringHuman() + " —");
+#if V15
+                    list.Label("— " + lastTech.ToStringHuman().CapitalizeFirst() + " —", -1f, (string)null);
+#else
+                    list.Label("— " + lastTech.ToStringHuman().CapitalizeFirst() + " —", -1f, (TipSignal?)null);
+#endif
                     GUI.color = Color.white;
-                    y += 24f;
                 }
 
                 bool allowed = Settings.allowedSiteFactions.Contains(faction.def.defName);
-                string label = faction.Name + (faction.HostileTo(Faction.OfPlayer) ? "" : " (ally)");
-                Widgets.CheckboxLabeled(new Rect(0f, y, viewRect.width, 24f), label, ref allowed);
+                string label = "  " + faction.Name
+                    + (faction.HostileTo(Faction.OfPlayer) ? "" : " (" + "QP_Ally".Translate() + ")");
+                list.CheckboxLabeled(label, ref allowed);
                 if (allowed && !Settings.allowedSiteFactions.Contains(faction.def.defName))
                     Settings.allowedSiteFactions.Add(faction.def.defName);
                 else if (!allowed)
                     Settings.allowedSiteFactions.Remove(faction.def.defName);
-                y += 26f;
             }
-
-            Widgets.EndScrollView();
+        }
+        else if (!Settings.siteFactionAutoMode)
+        {
+#if V15
+            list.Label("QP_SiteFactionNeedGame".Translate(), -1f, (string)null);
+#else
+            list.Label("QP_SiteFactionNeedGame".Translate(), -1f, (TipSignal?)null);
+#endif
         }
 
         list.End();
+        Widgets.EndScrollView();
+    }
+
+    private static void SectionHeader(Listing_Standard list, string label)
+    {
+        list.GapLine();
+        GUI.color = new Color(1f, 1f, 0.7f);
+#if V15
+        list.Label(label, -1f, (string)null);
+#else
+        list.Label(label, -1f, (TipSignal?)null);
+#endif
+        GUI.color = Color.white;
+        list.Gap(4f);
+    }
+
+    private static void InputLabeled(Listing_Standard list, string label, ref float value, float min, float max, bool pct = false)
+    {
+        Rect row = list.GetRect(24f);
+        float labelW = row.width - 60f;
+        string suffix = pct ? "%" : "";
+        Widgets.Label(new Rect(row.x, row.y, labelW, row.height), label + suffix);
+
+        float displayVal = pct ? value * 100f : value;
+        string buf = displayVal.ToString(pct ? "F0" : "F2");
+        buf = Widgets.TextField(new Rect(row.xMax - 55f, row.y, 55f, row.height), buf);
+        if (float.TryParse(buf, out float parsed))
+        {
+            float newVal = pct ? parsed / 100f : parsed;
+            value = Mathf.Clamp(newVal, min, max);
+        }
+        list.Gap(2f);
+    }
+
+    private static void InputLabeled(Listing_Standard list, string label, ref int value, int min, int max)
+    {
+        Rect row = list.GetRect(24f);
+        float labelW = row.width - 60f;
+        Widgets.Label(new Rect(row.x, row.y, labelW, row.height), label);
+
+        string buf = value.ToString();
+        buf = Widgets.TextField(new Rect(row.xMax - 55f, row.y, 55f, row.height), buf);
+        if (int.TryParse(buf, out int parsed))
+            value = Mathf.Clamp(parsed, min, max);
+        list.Gap(2f);
     }
 
     public override string SettingsCategory()

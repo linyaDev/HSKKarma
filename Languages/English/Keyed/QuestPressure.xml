@@ -20,6 +20,9 @@
 	<QP_WastepackBase>Base wastepack multiplier</QP_WastepackBase>
 	<QP_WastepackNeolithic>Extra multiplier (Neolithic)</QP_WastepackNeolithic>
 	<QP_WastepackMedieval>Extra multiplier (Medieval)</QP_WastepackMedieval>
+	<QP_ThreatRewardSection>— Threat and Reward —</QP_ThreatRewardSection>
+	<QP_Ally>ally</QP_Ally>
+	<QP_SiteFactionNeedGame>Load a save to configure factions.</QP_SiteFactionNeedGame>
 	<QP_SiteFactions>— Site Factions —</QP_SiteFactions>
 	<QP_SiteFactionAuto>Auto (match player tech level)</QP_SiteFactionAuto>
 	<QP_SiteFactionAutoTooltip>When enabled, only factions at or below your tech level can own hostile sites.\nDisable to manually select allowed factions.</QP_SiteFactionAutoTooltip>
