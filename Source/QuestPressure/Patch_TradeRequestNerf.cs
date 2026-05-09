@@ -6,7 +6,7 @@ using Verse;
 namespace KarmaHSK;
 
 [HarmonyPatch(typeof(QuestNode_TradeRequest_GetRequestedThing), "RunInt")]
-public static class Patch_TradeRequest
+public static class Patch_TradeRequestNerf
 {
     public static void Postfix()
     {

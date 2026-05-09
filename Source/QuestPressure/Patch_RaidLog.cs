@@ -5,7 +5,7 @@ using Verse;
 namespace KarmaHSK;
 
 [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.TryExecute))]
-public static class Patch_RaidPoints
+public static class Patch_RaidLog
 {
     public static void Prefix(IncidentWorker __instance, IncidentParms parms)
     {
