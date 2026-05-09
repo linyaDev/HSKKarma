@@ -118,47 +118,10 @@ public class Dialog_KarmaDebug : Window
 
         y += 6f;
 
-        // Active quests
-        GUI.color = new Color(1f, 1f, 0.7f);
-        Widgets.Label(new Rect(0f, y, w, 22f), "--- Active Quests ---");
-        GUI.color = Color.white;
-        y += 24f;
-
-        foreach (var quest in Find.QuestManager.QuestsListForReading)
-        {
-            if (quest.State != QuestState.NotYetAccepted && quest.State != QuestState.Ongoing)
-                continue;
-
-            int parts = quest.PartsListForReading?.Count ?? 0;
-            string root = quest.root?.defName ?? "null";
-            bool isBugged = parts == 0 || (quest.name != null && quest.name.StartsWith("ERR:"));
-
-            GUI.color = isBugged ? new Color(0.95f, 0.4f, 0.4f) : Color.white;
-            Widgets.Label(new Rect(0f, y, w, 20f),
-                quest.name + " [" + quest.State + "]");
-            y += 20f;
-
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.7f, 0.7f, 0.7f);
-            Widgets.Label(new Rect(10f, y, w - 10f, 18f),
-                "root=" + root + "  parts=" + parts +
-                "  charity=" + quest.charity +
-                (isBugged ? "  BUGGED" : ""));
-            y += 18f;
-
-            // List involved factions
-            var factions = quest.InvolvedFactions?.ToList();
-            if (factions != null && factions.Count > 0)
-            {
-                Widgets.Label(new Rect(10f, y, w - 10f, 18f),
-                    "factions: " + string.Join(", ", factions.Select(f => f.Name)));
-                y += 18f;
-            }
-
-            Text.Font = GameFont.Small;
-            GUI.color = Color.white;
-            y += 4f;
-        }
+        // Button to open quest debug window
+        if (Widgets.ButtonText(new Rect(0f, y, w, 28f), "Open Quest Debug"))
+            Find.WindowStack.Add(new Dialog_QuestDebug(windowRect));
+        y += 32f;
 
         // Debug event log
         if (GameComponent_QuestPressure.DebugLog.Count > 0)

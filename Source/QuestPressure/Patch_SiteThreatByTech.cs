@@ -17,6 +17,12 @@ public static class Patch_SiteThreatByTech
 {
     public static void Postfix(Map map)
     {
+        var faction = map.ParentFaction;
+        var parent = map.Parent;
+        string mapInfo = $"map={parent?.def?.defName ?? "?"}, faction={faction?.Name ?? "none"}, tile={parent?.Tile ?? -1}";
+        Log.Message($"[KarmaHSK] Patch_SiteThreatByTech fired: {mapInfo}");
+        GameComponent_QuestPressure.LogDebug($"SiteThreatByTech fired: {mapInfo}");
+
         var techLevel = Faction.OfPlayer?.def?.techLevel ?? TechLevel.Industrial;
 
         int maxEnemies;
@@ -33,7 +39,6 @@ public static class Patch_SiteThreatByTech
                 return;
         }
 
-        var faction = map.ParentFaction;
         if (faction == null || !faction.HostileTo(Faction.OfPlayer))
             return;
 

@@ -15,6 +15,7 @@ public static class Patch_SiteFactionTechLevel
     public static void Postfix(ref bool __result, Faction faction)
     {
         if (!__result || faction == null) return;
+        if (!faction.HostileTo(Faction.OfPlayer)) return;
 
         if ((int)faction.def.techLevel > (int)Faction.OfPlayer.def.techLevel)
         {
