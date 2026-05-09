@@ -61,8 +61,8 @@ public class Dialog_MercyInfo : Window
         Widgets.Label(new Rect(0f, 0f, inRect.width, 35f), "QP_MercyHistory".Translate());
         Text.Font = GameFont.Small;
 
-        // Debug button (dev mode only)
-        if (Prefs.DevMode)
+        // Debug button (temporarily always visible)
+        if (true) // was: Prefs.DevMode
         {
             Rect debugRect = new Rect(inRect.width - 50f, 4f, 40f, 24f);
             GUI.color = Mouse.IsOver(debugRect) ? Color.yellow : new Color(1f, 1f, 0.5f, 0.6f);

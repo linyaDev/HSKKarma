@@ -13,20 +13,6 @@
     </value>
   </Operation>
 
-  <!-- WorkSites: disable Logging, Hunting, Farming — keep only Mining -->
-  <Operation Class="PatchOperationReplace" MayRequire="Ludeon.RimWorld.Ideology">
-    <xpath>Defs/SitePartDef[defName="WorkSite_Logging"]/selectionWeight</xpath>
-    <value><selectionWeight>0</selectionWeight></value>
-  </Operation>
-  <Operation Class="PatchOperationReplace" MayRequire="Ludeon.RimWorld.Ideology">
-    <xpath>Defs/SitePartDef[defName="WorkSite_Hunting"]/selectionWeight</xpath>
-    <value><selectionWeight>0</selectionWeight></value>
-  </Operation>
-  <Operation Class="PatchOperationReplace" MayRequire="Ludeon.RimWorld.Ideology">
-    <xpath>Defs/SitePartDef[defName="WorkSite_Farming"]/selectionWeight</xpath>
-    <value><selectionWeight>0</selectionWeight></value>
-  </Operation>
-
   <!-- WorkSite Mining: remove ComponentIndustrial and Steel from loot table -->
   <Operation Class="PatchOperationRemove" MayRequire="Ludeon.RimWorld.Ideology">
     <xpath>Defs/SitePartDef[defName="WorkSite_Mining"]/lootTable/li[thing="ComponentIndustrial"]</xpath>

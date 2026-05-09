@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -6,6 +9,7 @@ namespace KarmaHSK;
 public class QuestPressureMod : Mod
 {
     public static QuestPressureSettings Settings;
+    private Vector2 factionScrollPos;
 
     public QuestPressureMod(ModContentPack content) : base(content)
     {
@@ -95,6 +99,57 @@ public class QuestPressureMod : Mod
             list.Label(medLabel, -1f, (TipSignal?)null);
 #endif
             Settings.wastepackMedievalMult = Mathf.Round(list.Slider(Settings.wastepackMedievalMult, 0.1f, 1.0f) * 10f) / 10f;
+        }
+
+        list.GapLine();
+
+        // === Site Faction Filter ===
+#if V15
+        list.Label("QP_SiteFactions".Translate(), -1f, (string)null);
+#else
+        list.Label("QP_SiteFactions".Translate(), -1f, (TipSignal?)null);
+#endif
+        list.Gap(4f);
+        list.CheckboxLabeled("QP_SiteFactionAuto".Translate(), ref Settings.siteFactionAutoMode, "QP_SiteFactionAutoTooltip".Translate());
+
+        if (!Settings.siteFactionAutoMode && Current.Game != null)
+        {
+            list.Gap(4f);
+            var factions = Find.FactionManager.AllFactions
+                .Where(f => f.def.humanlikeFaction && !f.IsPlayer && !f.temporary && !f.Hidden)
+                .OrderBy(f => (int)f.def.techLevel)
+                .ThenBy(f => f.Name)
+                .ToList();
+
+            float checkboxH = factions.Count * 26f + 60f;
+            Rect scrollRect = list.GetRect(Mathf.Min(checkboxH, 200f));
+            Rect viewRect = new Rect(0f, 0f, scrollRect.width - 16f, checkboxH);
+            Widgets.BeginScrollView(scrollRect, ref factionScrollPos, viewRect);
+
+            float y = 0f;
+            TechLevel lastTech = TechLevel.Undefined;
+            foreach (var faction in factions)
+            {
+                if (faction.def.techLevel != lastTech)
+                {
+                    lastTech = faction.def.techLevel;
+                    GUI.color = new Color(1f, 1f, 0.7f);
+                    Widgets.Label(new Rect(0f, y, viewRect.width, 22f), "— " + lastTech.ToStringHuman() + " —");
+                    GUI.color = Color.white;
+                    y += 24f;
+                }
+
+                bool allowed = Settings.allowedSiteFactions.Contains(faction.def.defName);
+                string label = faction.Name + (faction.HostileTo(Faction.OfPlayer) ? "" : " (ally)");
+                Widgets.CheckboxLabeled(new Rect(0f, y, viewRect.width, 24f), label, ref allowed);
+                if (allowed && !Settings.allowedSiteFactions.Contains(faction.def.defName))
+                    Settings.allowedSiteFactions.Add(faction.def.defName);
+                else if (!allowed)
+                    Settings.allowedSiteFactions.Remove(faction.def.defName);
+                y += 26f;
+            }
+
+            Widgets.EndScrollView();
         }
 
         list.End();

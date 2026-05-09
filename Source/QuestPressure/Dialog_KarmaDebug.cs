@@ -128,8 +128,10 @@ public class Dialog_KarmaDebug : Window
         {
             y += 6f;
             GUI.color = new Color(1f, 1f, 0.7f);
-            Widgets.Label(new Rect(0f, y, w, 22f), "--- Event Log ---");
+            Widgets.Label(new Rect(0f, y, w - 70f, 22f), "--- Event Log ---");
             GUI.color = Color.white;
+            if (Widgets.ButtonText(new Rect(w - 60f, y, 60f, 20f), "Clear"))
+                GameComponent_QuestPressure.DebugLog.Clear();
             y += 24f;
 
             Text.Font = GameFont.Tiny;

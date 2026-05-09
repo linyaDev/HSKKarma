@@ -83,8 +83,6 @@ public class GameComponent_QuestPressure : GameComponent
     public static void LogDebug(string msg)
     {
         DebugLog.Add($"[{GenTicks.TicksGame}] {msg}");
-        if (DebugLog.Count > 50)
-            DebugLog.RemoveAt(0);
     }
 
     public int GetPoints(QuestRecord r)

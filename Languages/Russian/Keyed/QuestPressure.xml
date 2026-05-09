@@ -20,6 +20,9 @@
 	<QP_WastepackBase>Базовый множитель мешков</QP_WastepackBase>
 	<QP_WastepackNeolithic>Доп. множитель (Неолит)</QP_WastepackNeolithic>
 	<QP_WastepackMedieval>Доп. множитель (Средневековье)</QP_WastepackMedieval>
+	<QP_SiteFactions>— Фракции сайтов —</QP_SiteFactions>
+	<QP_SiteFactionAuto>Авто (по техуровню игрока)</QP_SiteFactionAuto>
+	<QP_SiteFactionAutoTooltip>Если включено, на враждебных сайтах могут быть только фракции с техуровнем не выше вашего.\nОтключите для ручного выбора фракций.</QP_SiteFactionAutoTooltip>
 	<QP_MoteMercy>карма</QP_MoteMercy>
 	<QP_Stage0>бессердечные</QP_Stage0>
 	<QP_Stage1>жестокие</QP_Stage1>
