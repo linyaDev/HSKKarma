@@ -13,14 +13,6 @@
     </value>
   </Operation>
 
-  <!-- WorkSite Mining: remove ComponentIndustrial and Steel from loot table -->
-  <Operation Class="PatchOperationRemove" MayRequire="Ludeon.RimWorld.Ideology">
-    <xpath>Defs/SitePartDef[defName="WorkSite_Mining"]/lootTable/li[thing="ComponentIndustrial"]</xpath>
-  </Operation>
-  <Operation Class="PatchOperationRemove" MayRequire="Ludeon.RimWorld.Ideology">
-    <xpath>Defs/SitePartDef[defName="WorkSite_Mining"]/lootTable/li[thing="Steel"]</xpath>
-  </Operation>
-
   <!-- Hospitality: remove mechanoids from enemy faction pool -->
   <Operation Class="PatchOperationRemove">
     <xpath>Defs/QuestScriptDef[defName="Hospitality_Util_Worker"]//li[@Class="QuestNode_GetFaction"]/allowedHiddenFactions</xpath>

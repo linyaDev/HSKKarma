@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -52,54 +49,6 @@ public class QuestPressureMod : Mod
             InputLabeled(list, "QP_WastepackMedieval".Translate(), ref Settings.wastepackMedievalMult, 0.1f, 1.0f, pct: true);
         }
 
-        // === Site Factions ===
-        SectionHeader(list, "QP_SiteFactions".Translate());
-
-        list.CheckboxLabeled("QP_SiteFactionAuto".Translate(), ref Settings.siteFactionAutoMode, "QP_SiteFactionAutoTooltip".Translate());
-
-        if (!Settings.siteFactionAutoMode && Current.Game != null)
-        {
-            list.Gap(4f);
-            var factions = Find.FactionManager.AllFactions
-                .Where(f => f.def.humanlikeFaction && !f.IsPlayer && !f.temporary && !f.Hidden)
-                .OrderBy(f => (int)f.def.techLevel)
-                .ThenBy(f => f.Name)
-                .ToList();
-
-            TechLevel lastTech = TechLevel.Undefined;
-            foreach (var faction in factions)
-            {
-                if (faction.def.techLevel != lastTech)
-                {
-                    lastTech = faction.def.techLevel;
-                    list.Gap(4f);
-                    GUI.color = new Color(1f, 1f, 0.7f);
-#if V15
-                    list.Label("— " + lastTech.ToStringHuman().CapitalizeFirst() + " —", -1f, (string)null);
-#else
-                    list.Label("— " + lastTech.ToStringHuman().CapitalizeFirst() + " —", -1f, (TipSignal?)null);
-#endif
-                    GUI.color = Color.white;
-                }
-
-                bool allowed = Settings.allowedSiteFactions.Contains(faction.def.defName);
-                string label = "  " + faction.Name
-                    + (faction.HostileTo(Faction.OfPlayer) ? "" : " (" + "QP_Ally".Translate() + ")");
-                list.CheckboxLabeled(label, ref allowed);
-                if (allowed && !Settings.allowedSiteFactions.Contains(faction.def.defName))
-                    Settings.allowedSiteFactions.Add(faction.def.defName);
-                else if (!allowed)
-                    Settings.allowedSiteFactions.Remove(faction.def.defName);
-            }
-        }
-        else if (!Settings.siteFactionAutoMode)
-        {
-#if V15
-            list.Label("QP_SiteFactionNeedGame".Translate(), -1f, (string)null);
-#else
-            list.Label("QP_SiteFactionNeedGame".Translate(), -1f, (TipSignal?)null);
-#endif
-        }
 
         list.End();
         Widgets.EndScrollView();

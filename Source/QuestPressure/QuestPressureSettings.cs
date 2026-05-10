@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Verse;
 
 namespace KarmaHSK;
@@ -16,17 +15,6 @@ public class QuestPressureSettings : ModSettings
     public float wastepackMedievalMult = 0.1f;
     public float wastepackIndustrialMult = 0.5f;
 
-    // Site faction filter: null = auto (same tech level as player)
-    public bool siteFactionAutoMode = true;
-    public List<string> allowedSiteFactions = new List<string>();
-
-    public bool IsFactionAllowed(string defName, RimWorld.TechLevel factionTech)
-    {
-        if (siteFactionAutoMode)
-            return (int)factionTech <= (int)(RimWorld.Faction.OfPlayer?.def?.techLevel ?? RimWorld.TechLevel.Industrial);
-        return allowedSiteFactions.Contains(defName);
-    }
-
     public override void ExposeData()
     {
         Scribe_Values.Look(ref threatMultiplier, "threatMultiplier", 0.6f);
@@ -39,10 +27,6 @@ public class QuestPressureSettings : ModSettings
         Scribe_Values.Look(ref wastepackNeolithicMult, "wastepackNeolithicMult", 0.05f);
         Scribe_Values.Look(ref wastepackMedievalMult, "wastepackMedievalMult", 0.1f);
         Scribe_Values.Look(ref wastepackIndustrialMult, "wastepackIndustrialMult", 0.5f);
-        Scribe_Values.Look(ref siteFactionAutoMode, "siteFactionAutoMode", true);
-        Scribe_Collections.Look(ref allowedSiteFactions, "allowedSiteFactions", LookMode.Value);
-        if (allowedSiteFactions == null)
-            allowedSiteFactions = new List<string>();
         base.ExposeData();
     }
 }
