@@ -7,22 +7,22 @@
 			<li>
 				<label>heartless</label>
 				<description>We have ignored so many pleas for help. We are monsters.</description>
-				<baseMoodEffect>-20</baseMoodEffect>
+				<baseMoodEffect>-10</baseMoodEffect>
 			</li>
 			<li>
 				<label>cruel</label>
 				<description>We keep turning away those who need us. It's eating at me.</description>
-				<baseMoodEffect>-15</baseMoodEffect>
+				<baseMoodEffect>-8</baseMoodEffect>
 			</li>
 			<li>
 				<label>indifferent</label>
 				<description>We rarely help anyone. Are we really that cold?</description>
-				<baseMoodEffect>-10</baseMoodEffect>
+				<baseMoodEffect>-6</baseMoodEffect>
 			</li>
 			<li>
 				<label>apathetic</label>
 				<description>We could do more to help others. We just don't.</description>
-				<baseMoodEffect>-5</baseMoodEffect>
+				<baseMoodEffect>-4</baseMoodEffect>
 			</li>
 			<li>
 				<label>cold</label>
@@ -37,22 +37,22 @@
 			<li>
 				<label>caring</label>
 				<description>We try to help when we can. It feels right.</description>
-				<baseMoodEffect>2</baseMoodEffect>
+				<baseMoodEffect>1</baseMoodEffect>
 			</li>
 			<li>
 				<label>sympathetic</label>
 				<description>We've been doing good work helping others lately.</description>
-				<baseMoodEffect>4</baseMoodEffect>
+				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 			<li>
 				<label>merciful</label>
 				<description>We answer almost every call for help. I'm proud of us.</description>
-				<baseMoodEffect>6</baseMoodEffect>
+				<baseMoodEffect>3</baseMoodEffect>
 			</li>
 			<li>
 				<label>saintly</label>
 				<description>We never turn anyone away. We are a beacon of hope.</description>
-				<baseMoodEffect>8</baseMoodEffect>
+				<baseMoodEffect>4</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>

@@ -45,9 +45,12 @@ public static class Patch_TravelerRefused
         Log.Message("[KarmaHSK] AskBeforeEnter refusal patch applied.");
     }
 
-    public static void Postfix()
+    public static void Postfix(IncidentParms parms, IncidentWorker incident)
     {
         if (Find.WindowStack == null) return;
+
+        // Only apply karma penalty for TravelerGroup, not caravans or visitors
+        if (incident?.def?.defName != "TravelerGroup") return;
 
         // Find the Dialog_NodeTree that ABE just added
         for (int i = Find.WindowStack.Count - 1; i >= 0; i--)
