@@ -22,7 +22,8 @@ static class QuestKarmaExclusions
     public static readonly HashSet<string> excludedQuests = new HashSet<string>
     {
         "OpportunitySite_WorkSite",
-        "OpportunitySite_ItemStash"
+        "OpportunitySite_ItemStash",
+        "RefugeeBetrayal"
     };
 
     public static bool IsExcluded(Quest quest)
