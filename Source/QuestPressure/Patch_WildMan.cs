@@ -20,8 +20,10 @@ public static class Patch_WildManKilled
 
     public static void Prefix(Pawn __instance, DamageInfo? dinfo)
     {
+        Log.Message("[KarmaHSK] Patch_WildManKilled fired");
         if (!__instance.IsWildMan())
             return;
+        Log.Message("[KarmaHSK] Wild man killed: " + __instance.LabelShort);
 
         // Direct kill by colonist
         Pawn killer = dinfo?.Instigator as Pawn;
@@ -54,6 +56,7 @@ public static class Patch_WildManWounded
 
     public static void Postfix(Pawn __instance, DamageInfo dinfo)
     {
+        Log.Message("[KarmaHSK] Patch_WildManWounded fired");
         if (__instance.Dead)
             return;
 
@@ -90,6 +93,7 @@ public static class Patch_WildManIncident
 {
     public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)
     {
+        Log.Message("[KarmaHSK] Patch_WildManIncident fired");
         if (!__result)
             return;
 

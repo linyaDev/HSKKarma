@@ -57,6 +57,7 @@ public static class Patch_QuestExpired
     public static void Postfix(Quest __instance, bool __state)
     {
         if (!__state) return;
+        Log.Message("[KarmaHSK] Patch_QuestExpired: quest expiring: " + (__instance.name ?? "?"));
         if (QuestKarmaExclusions.IsExcluded(__instance)) return;
         if (QuestKarmaExclusions.IsBugged(__instance))
         {
@@ -79,6 +80,7 @@ public static class Patch_QuestCompleted
 {
     public static void Postfix(Quest __instance, QuestEndOutcome outcome)
     {
+        Log.Message("[KarmaHSK] Patch_QuestCompleted fired");
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         if (comp == null) return;
 

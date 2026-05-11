@@ -12,6 +12,7 @@ public static class Patch_TravelerAllowed
 {
     public static void Postfix(bool __result, IncidentParms parms)
     {
+        Log.Message("[KarmaHSK] Patch_TravelerAllowed fired");
         if (!__result || !parms.forced)
             return;
 
@@ -47,6 +48,7 @@ public static class Patch_TravelerRefused
 
     public static void Postfix(IncidentParms parms, IncidentWorker incident)
     {
+        Log.Message("[KarmaHSK] Patch_TravelerRefused fired");
         if (Find.WindowStack == null) return;
 
         // Only apply karma penalty for TravelerGroup, not caravans or visitors

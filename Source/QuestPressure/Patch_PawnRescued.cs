@@ -9,6 +9,7 @@ public static class Patch_PawnRescued
 {
     public static void Postfix(Pawn_GuestTracker __instance)
     {
+        Log.Message("[KarmaHSK] Patch_PawnRescued fired");
         var pawn = __instance.pawn;
         if (pawn == null || !pawn.RaceProps.Humanlike)
             return;

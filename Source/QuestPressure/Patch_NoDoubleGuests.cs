@@ -18,6 +18,7 @@ public static class Patch_NoDoubleGuests
 
     public static bool Prefix(QuestScriptDef __instance, ref bool __result)
     {
+        Log.Message("[KarmaHSK] Patch_NoDoubleGuests fired");
         if (!lodgerQuests.Contains(__instance.defName))
             return true;
 
@@ -46,6 +47,7 @@ public static class Patch_NoDoubleGuests_Beggars
 {
     public static bool Prefix(ref bool __result)
     {
+        Log.Message("[KarmaHSK] Patch_NoDoubleGuests_Beggars fired");
         if (Patch_NoDoubleGuests.HasLodgersOnAnyMap())
         {
             Messages.Message("QP_GuestsAlreadyPresent".Translate(), MessageTypeDefOf.RejectInput, false);
@@ -61,6 +63,7 @@ public static class Patch_NoDoubleGuests_Refugee
 {
     public static bool Prefix(ref bool __result)
     {
+        Log.Message("[KarmaHSK] Patch_NoDoubleGuests_Refugee fired");
         if (Patch_NoDoubleGuests.HasLodgersOnAnyMap())
         {
             Messages.Message("QP_GuestsAlreadyPresent".Translate(), MessageTypeDefOf.RejectInput, false);

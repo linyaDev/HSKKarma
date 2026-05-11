@@ -12,6 +12,7 @@ public static class Patch_RefugeeCount
 {
     public static void Postfix(ref int __result, Map map)
     {
+        Log.Message("[KarmaHSK] Patch_RefugeeCount fired");
         var settings = QuestPressureMod.Settings;
         if (settings == null || !settings.limitRefugees)
             return;

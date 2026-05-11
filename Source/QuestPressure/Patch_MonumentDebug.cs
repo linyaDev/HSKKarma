@@ -9,6 +9,7 @@ public static class Patch_MonumentDebug
 {
     public static void Prefix(QuestNode_GetMonumentSketch __instance)
     {
+        Log.Message("[KarmaHSK] Patch_MonumentDebug fired");
         var slate = QuestGen.slate;
         float points = slate.Get("points", 0f);
         float pointsPerArea = AccessTools.FieldRefAccess<QuestNode_GetMonumentSketch, SlateRef<float>>(__instance, "pointsPerArea").GetValue(slate);

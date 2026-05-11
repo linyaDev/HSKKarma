@@ -10,6 +10,7 @@ public static class Patch_TradeRequestNerf
 {
     public static void Postfix()
     {
+        Log.Message("[KarmaHSK] Patch_TradeRequestNerf fired");
         var settings = QuestPressureMod.Settings;
         if (settings == null)
             return;

@@ -15,6 +15,7 @@ public class Dialog_MercyInfo : Window
     private static readonly Dictionary<string, string> questNameOverrides = new Dictionary<string, string>
     {
         { "WandererJoinAbasia", "QP_QuestName_WandererJoinAbasia" },
+        { "CreepJoinerArrival", "QP_QuestName_CreepJoinerArrival" },
     };
 
     private static string PrettyQuestName(string name)

@@ -13,6 +13,7 @@ public static class Patch_WastepackCount
 
     public static void Prefix()
     {
+        Log.Message("[KarmaHSK] Patch_WastepackCount fired");
         var settings = QuestPressureMod.Settings;
         if (settings == null || !settings.nerfWastepacks)
             return;
@@ -48,6 +49,7 @@ public static class Patch_WastepackCount
 
     public static void Postfix()
     {
+        Log.Message("[KarmaHSK] Patch_WastepackCount fired");
         var settings = QuestPressureMod.Settings;
         if (settings == null || !settings.nerfWastepacks)
             return;

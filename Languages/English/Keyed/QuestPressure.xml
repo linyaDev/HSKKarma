@@ -49,6 +49,7 @@
 
 	<!-- Quest name overrides -->
 	<QP_QuestName_WandererJoinAbasia>Wanderer with abasia</QP_QuestName_WandererJoinAbasia>
+	<QP_QuestName_CreepJoinerArrival>Creep joiner</QP_QuestName_CreepJoinerArrival>
 	<QP_DifficultyBonus>Difficulty bonus</QP_DifficultyBonus>
 	<QP_YearlySummary>Year {0} summary</QP_YearlySummary>
 	<QP_GuestsAlreadyPresent>Quest skipped — guests already present in colony.</QP_GuestsAlreadyPresent>

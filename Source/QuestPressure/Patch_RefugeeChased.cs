@@ -35,6 +35,7 @@ public static class Patch_RefugeeChased
 
     public static void Postfix(object __instance, bool __result)
     {
+        Log.Message("[KarmaHSK] Patch_RefugeeChased fired");
         if (!__result) return;
 
         // Cache reflection
