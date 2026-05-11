@@ -90,6 +90,14 @@ public static class Patch_QuestCompleted
                 comp.RecordQuest(name, __instance.id, QuestRecordType.CharityCompleted);
             else
                 comp.RecordQuest(name, __instance.id, QuestRecordType.Completed);
+
+            // Bonus karma for higher difficulty (1 star = 0, 2 stars = +1, 3 stars = +2)
+            int bonus = __instance.challengeRating - 1;
+            if (bonus > 0)
+            {
+                comp.RecordQuest("QP_DifficultyBonus".Translate(), __instance.id, QuestRecordType.TinyBonus, customWeight: bonus);
+                GameComponent_QuestPressure.LogDebug($"Quest difficulty bonus: +{bonus} for {name} (rating {__instance.challengeRating})");
+            }
         }
         else if (outcome == QuestEndOutcome.Fail)
         {
