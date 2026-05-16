@@ -75,6 +75,14 @@ public class Dialog_KarmaDebug : Window
 
         y += 6f;
 
+        // Monument check
+        bool hasMonument = Patch_NoDoubleMonument.HasActiveMonumentQuest();
+        GUI.color = hasMonument ? new Color(0.95f, 0.4f, 0.4f) : new Color(0.4f, 0.95f, 0.4f);
+        Widgets.Label(new Rect(0f, y, w, 22f),
+            "Monument quests blocked: " + (hasMonument ? "YES" : "NO"));
+        GUI.color = Color.white;
+        y += 26f;
+
         // Score
         var comp = Current.Game?.GetComponent<GameComponent_QuestPressure>();
         if (comp != null)

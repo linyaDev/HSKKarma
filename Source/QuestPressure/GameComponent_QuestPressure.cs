@@ -52,7 +52,7 @@ public class GameComponent_QuestPressure : GameComponent
     }
 
     public const int CompletedWeight = 2;
-    public const int ExpiredWeight = -1;
+    public const int ExpiredWeight = -2;
     public const int FailedWeight = -3;
     public const int MinorPenaltyWeight = -1;
     public const int MajorPenaltyWeight = -4;

@@ -12,6 +12,7 @@ public static class QuestPressureInit
     {
         var harmony = new Harmony("linya.karmahsk");
         harmony.PatchAll();
+        Patch_WastepackCount.PatchCurve();
         Log.Message("[QuestPressure] Patches applied.");
     }
 }
@@ -23,12 +24,25 @@ static class QuestKarmaExclusions
     {
         "OpportunitySite_WorkSite",
         "OpportunitySite_ItemStash",
-        "RefugeeBetrayal"
+        "OpportunitySite_DownedRefugee",
+        "OpportunitySite_PrisonerWillingToJoin",
+        "OpportunitySite_PeaceTalks",
+        "OpportunitySite_AncientComplex",
+        "OpportunitySite_AncientComplex_Mechanitor",
+        "OpportunitySite_DistressCall",
+        "RefugeeBetrayal",
+        "SanguophageShip",
+        "Intro_Deserter"
     };
 
     public static bool IsExcluded(Quest quest)
     {
         return quest.root != null && excludedQuests.Contains(quest.root.defName);
+    }
+
+    public static bool IsBanditCamp(Quest quest)
+    {
+        return quest.root != null && quest.root.defName == "OpportunitySite_BanditCamp";
     }
 
     public static bool IsBugged(Quest quest)
@@ -88,6 +102,10 @@ public static class Patch_QuestCompleted
 
         if (outcome == QuestEndOutcome.Success)
         {
+            if (QuestKarmaExclusions.IsExcluded(__instance)
+                && !QuestKarmaExclusions.IsBanditCamp(__instance))
+                return;
+
             if (__instance.charity)
                 comp.RecordQuest(name, __instance.id, QuestRecordType.CharityCompleted);
             else

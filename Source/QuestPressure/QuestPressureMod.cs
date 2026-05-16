@@ -27,6 +27,7 @@ public class QuestPressureMod : Mod
         SectionHeader(list, "QP_ThreatRewardSection".Translate());
 
         InputLabeled(list, "QP_ThreatMultiplier".Translate(), ref Settings.threatMultiplier, 0.1f, 2.0f, pct: true);
+        InputLabeled(list, "QP_SiteThreatMultiplier".Translate(), ref Settings.siteThreatMultiplier, 0.1f, 2.0f, pct: true);
         InputLabeled(list, "QP_RewardMultiplier".Translate(), ref Settings.rewardMultiplier, 0.1f, 3.0f, pct: true);
 
         // === Quests ===

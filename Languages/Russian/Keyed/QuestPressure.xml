@@ -9,6 +9,7 @@
 	<QP_Score>Счёт</QP_Score>
 	<QP_SettingsCategory>Карма</QP_SettingsCategory>
 	<QP_ThreatMultiplier>Множитель угрозы заданий</QP_ThreatMultiplier>
+	<QP_SiteThreatMultiplier>Множитель угрозы сайтов</QP_SiteThreatMultiplier>
 	<QP_RewardMultiplier>Множитель награды заданий</QP_RewardMultiplier>
 	<QP_QuestSection>— Квесты —</QP_QuestSection>
 	<QP_LimitRefugees>Ограничить беженцев</QP_LimitRefugees>
@@ -53,6 +54,7 @@
 	<QP_DifficultyBonus>Бонус за сложность</QP_DifficultyBonus>
 	<QP_YearlySummary>Итог года {0}</QP_YearlySummary>
 	<QP_GuestsAlreadyPresent>Квест пропущен — в колонии уже есть гости.</QP_GuestsAlreadyPresent>
+	<QP_MonumentAlreadyActive>Квест пропущен — уже есть активный квест на строение.</QP_MonumentAlreadyActive>
 	<QP_BuggedQuestSkipped>Багнутый квест "{0}" пропущен — без штрафа кармы.</QP_BuggedQuestSkipped>
 	<QP_Shop>Обменять карму:</QP_Shop>
 	<QP_ShopPemmican>Пеммикан x{0} (-{1})</QP_ShopPemmican>

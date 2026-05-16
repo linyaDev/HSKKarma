@@ -9,6 +9,7 @@
 	<QP_Score>Score</QP_Score>
 	<QP_SettingsCategory>Karma</QP_SettingsCategory>
 	<QP_ThreatMultiplier>Quest threat multiplier</QP_ThreatMultiplier>
+	<QP_SiteThreatMultiplier>Site threat multiplier</QP_SiteThreatMultiplier>
 	<QP_RewardMultiplier>Quest reward multiplier</QP_RewardMultiplier>
 	<QP_QuestSection>— Quests —</QP_QuestSection>
 	<QP_LimitRefugees>Limit refugees</QP_LimitRefugees>
@@ -53,6 +54,7 @@
 	<QP_DifficultyBonus>Difficulty bonus</QP_DifficultyBonus>
 	<QP_YearlySummary>Year {0} summary</QP_YearlySummary>
 	<QP_GuestsAlreadyPresent>Quest skipped — guests already present in colony.</QP_GuestsAlreadyPresent>
+	<QP_MonumentAlreadyActive>Quest skipped — monument quest already in progress.</QP_MonumentAlreadyActive>
 	<QP_BuggedQuestSkipped>Bugged quest "{0}" skipped — no karma penalty.</QP_BuggedQuestSkipped>
 	<QP_Shop>Trade mercy:</QP_Shop>
 	<QP_ShopPemmican>Pemmican x{0} (-{1})</QP_ShopPemmican>

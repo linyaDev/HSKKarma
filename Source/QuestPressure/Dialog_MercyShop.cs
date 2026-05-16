@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI.Group;
 
 namespace KarmaHSK;
 
@@ -26,7 +23,7 @@ public class Dialog_MercyShop : Window
 
     private static readonly ShopItem[] shopItems =
     {
-        new ShopItem { defName = "Pemmican", count = 300, cost = 2, labelKey = "QP_ShopPemmican" },
+        new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
         new ShopItem { defName = "MedicineIndustrial", count = 3, cost = 5, labelKey = "QP_ShopMedicine" },
     };
 
@@ -114,88 +111,6 @@ public class Dialog_MercyShop : Window
             y += 38f;
         }
 
-        // Reinforcements button
-        y += 10f;
-        GUI.color = new Color(1f, 1f, 1f, 0.2f);
-        Widgets.DrawLineHorizontal(0f, y, inRect.width);
-        GUI.color = Color.white;
-        y += 6f;
-
-        int reinforceCost = 2;
-        bool hasRaid = HasActiveRaid();
-        bool canReinforce = comp.Score >= reinforceCost && hasRaid;
-
-        Rect rRow = new Rect(0f, y, inRect.width, 36f);
-        Widgets.DrawBoxSolid(rRow, RowBg);
-        if (Mouse.IsOver(rRow))
-            Widgets.DrawHighlight(rRow);
-
-        string reinforceLabel = "QP_ShopReinforce".Translate(reinforceCost);
-        Widgets.Label(new Rect(10f, y, inRect.width - 180f, 36f), reinforceLabel);
-
-        if (!hasRaid)
-        {
-            GUI.color = DimText;
-            Text.Anchor = TextAnchor.MiddleRight;
-            Widgets.Label(new Rect(inRect.width - 200f, y, 120f, 36f), "QP_ShopNoRaid".Translate());
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
-        }
-
-        GUI.color = canReinforce ? Color.white : new Color(1f, 1f, 1f, 0.4f);
-        if (Widgets.ButtonText(new Rect(inRect.width - 75f, y + 4f, 70f, 28f), "QP_ShopBuy".Translate()) && canReinforce)
-        {
-            SpawnReinforcements(reinforceCost);
-        }
-        GUI.color = Color.white;
-    }
-
-    private bool HasActiveRaid()
-    {
-        var map = Find.CurrentMap;
-        if (map == null) return false;
-        return map.attackTargetsCache.TargetsHostileToColony
-            .Any(t => GenHostility.IsActiveThreatToPlayer(t));
-    }
-
-    private void SpawnReinforcements(int cost)
-    {
-        comp.RecordQuest("QP_ShopReinforce_Record".Translate(), 0, QuestRecordType.ShopPurchase, customWeight: -cost);
-
-        var map = Find.CurrentMap;
-        if (map == null) return;
-
-        int count = 3;
-        var pawns = new List<Pawn>();
-
-        for (int i = 0; i < count; i++)
-        {
-            var request = new PawnGenerationRequest(
-                PawnKindDefOf.Colonist,
-                Faction.OfPlayer,
-                PawnGenerationContext.NonPlayer,
-                forceGenerateNewPawn: true,
-                canGeneratePawnRelations: false,
-                allowAddictions: false);
-            var pawn = PawnGenerator.GeneratePawn(request);
-            pawns.Add(pawn);
-        }
-
-        IntVec3 entryCell = CellFinder.RandomEdgeCell(map);
-        foreach (var pawn in pawns)
-        {
-            IntVec3 loc = CellFinder.RandomClosewalkCellNear(entryCell, map, 5);
-            GenSpawn.Spawn(pawn, loc, map);
-
-            // Make them fight enemies then leave
-            pawn.mindState.exitMapAfterTick = Find.TickManager.TicksGame + 30000; // leave after ~half day
-        }
-
-        // Assign assault lord
-        var lord = LordMaker.MakeNewLord(Faction.OfPlayer, new LordJob_AssistColony(Faction.OfPlayer, entryCell), map, pawns);
-
-        Messages.Message("QP_ShopReinforceSent".Translate(count), new TargetInfo(entryCell, map), MessageTypeDefOf.PositiveEvent);
-        GameComponent_QuestPressure.LogDebug($"Reinforcements: {count} fighters spawned");
     }
 
     private void SpendMercy(ShopItem item)
