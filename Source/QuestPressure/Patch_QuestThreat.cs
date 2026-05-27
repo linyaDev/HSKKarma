@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace KarmaHSK;
@@ -19,11 +20,14 @@ public static class Patch_QuestThreat
         bool isSite = __instance is StorytellerComp_WorkSite;
         float multiplier = isSite ? settings.siteThreatMultiplier : settings.threatMultiplier;
 
+        const float MinPoints = 350f;
         float original = __result.points;
-        __result.points *= multiplier;
+        float scaled = original * multiplier;
+        __result.points = Mathf.Min(Mathf.Max(scaled, MinPoints), original);
         string questInfo = __result.questScriptDef?.defName ?? __result.quest?.name ?? "?";
         string label = isSite ? "Site" : "Quest";
-        string msg = $"{label} points reduced: {original:F0} -> {__result.points:F0} (x{multiplier}), quest: {questInfo}";
+        string clamped = scaled < MinPoints ? ", clamped to min" : "";
+        string msg = $"{label} points: {original:F0} -> {__result.points:F0} (x{multiplier}{clamped}), quest: {questInfo}";
         Log.Message($"[KarmaHSK] {msg}");
         GameComponent_QuestPressure.LogDebug(msg);
     }

@@ -21,11 +21,22 @@ public class Dialog_MercyShop : Window
         public string labelKey;
     }
 
-    private static readonly ShopItem[] shopItems =
+    private static ShopItem[] GetShopItems()
     {
-        new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
-        new ShopItem { defName = "MedicineIndustrial", count = 3, cost = 5, labelKey = "QP_ShopMedicine" },
-    };
+        var techLevel = Faction.OfPlayer?.def?.techLevel ?? TechLevel.Neolithic;
+        string medDef;
+        if (techLevel >= TechLevel.Industrial)
+            medDef = "MedicineIndustrial";
+        else if (techLevel >= TechLevel.Medieval)
+            medDef = "Herbmedicine";
+        else
+            medDef = "HerbMedicine";
+        return new[]
+        {
+            new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
+            new ShopItem { defName = medDef, count = 3, cost = 5, labelKey = "QP_ShopMedicine" },
+        };
+    }
 
     public override Vector2 InitialSize => new Vector2(420f, 300f);
 
@@ -73,9 +84,10 @@ public class Dialog_MercyShop : Window
         y += 6f;
 
         // Items list
-        for (int i = 0; i < shopItems.Length; i++)
+        var items = GetShopItems();
+        for (int i = 0; i < items.Length; i++)
         {
-            var item = shopItems[i];
+            var item = items[i];
             bool canAfford = comp.Score >= item.cost;
             Rect rowRect = new Rect(0f, y, inRect.width, 36f);
 

@@ -225,8 +225,34 @@ public class Dialog_MercyInfo : Window
         Widgets.EndScrollView();
     }
 
-    private static readonly int[] StageMoods = { -20, -15, -10, -5, -2, 0, 2, 4, 6, 8 };
-    private static readonly float[] StageThresholds = { 0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.90f, 1.0f };
+    private static int[] _stageMoods;
+    private static int[] StageMoods
+    {
+        get
+        {
+            if (_stageMoods == null)
+            {
+                var def = DefDatabase<ThoughtDef>.GetNamedSilentFail("MercyThought");
+                if (def?.stages != null)
+                    _stageMoods = def.stages.ConvertAll(s => (int)s.baseMoodEffect).ToArray();
+                else
+                    _stageMoods = new[] { -10, -8, -6, -4, -2, 0, 1, 2, 3, 4 };
+            }
+            return _stageMoods;
+        }
+    }
+    public static readonly float[] StageThresholds = { 0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.90f, 1.0f };
+
+    public static int GetStageIndex(float level)
+    {
+        for (int i = 0; i < StageThresholds.Length - 1; i++)
+        {
+            // Stage 4 (cold): use < so 0.50 exact maps to neutral (stage 5)
+            if (i == 4 ? level < StageThresholds[i] : level <= StageThresholds[i])
+                return i;
+        }
+        return StageThresholds.Length - 1;
+    }
     private static readonly Color[] StageColors =
     {
         new Color(0.7f, 0.1f, 0.1f),   // -20 dark red
@@ -317,12 +343,7 @@ public class Dialog_MercyInfo : Window
 
     private int GetCurrentStage(float normalizedScore)
     {
-        for (int i = 0; i < StageThresholds.Length; i++)
-        {
-            if (i == 4 && normalizedScore >= 0.50f) continue; // 0.5 exact = neutral
-            if (normalizedScore <= StageThresholds[i]) return i;
-        }
-        return StageThresholds.Length - 1;
+        return GetStageIndex(normalizedScore);
     }
 
     private int GetScoreForNextStage(int currentStage, int score)
@@ -333,21 +354,6 @@ public class Dialog_MercyInfo : Window
         int nextScore = (int)(nextThreshold * max * 2f - max) - score + 1;
         return Mathf.Max(0, nextScore);
     }
-
-    // === Shop ===
-    private struct ShopItem
-    {
-        public string defName;
-        public int count;
-        public int cost;
-        public string labelKey;
-    }
-
-    private static readonly ShopItem[] shopItems = new ShopItem[]
-    {
-        new ShopItem { defName = "Pemmican", count = 300, cost = 5, labelKey = "QP_ShopPemmican" },
-        new ShopItem { defName = "MedicineIndustrial", count = 10, cost = 5, labelKey = "QP_ShopMedicine" },
-    };
 
     private float DrawShop(Rect inRect, float y, GameComponent_QuestPressure comp)
     {

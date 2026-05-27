@@ -32,7 +32,9 @@ static class QuestKarmaExclusions
         "OpportunitySite_DistressCall",
         "RefugeeBetrayal",
         "SanguophageShip",
-        "Intro_Deserter"
+        "Intro_Deserter",
+        "SightstealerArrival",
+        "BestowingCeremony"
     };
 
     public static bool IsExcluded(Quest quest)
