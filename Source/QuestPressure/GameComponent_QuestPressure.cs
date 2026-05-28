@@ -140,6 +140,80 @@ public class GameComponent_QuestPressure : GameComponent
         }
     }
 
+    // Rescued pawn tracking: pawnID -> tick when rescued
+    private Dictionary<int, int> rescuedPawns = new Dictionary<int, int>();
+    private const int RescueSurvivalTicks = 30 * 60000; // 30 days
+
+    public void TrackRescuedPawn(Pawn pawn)
+    {
+        if (pawn == null) return;
+        int id = pawn.thingIDNumber;
+        if (!rescuedPawns.ContainsKey(id))
+        {
+            rescuedPawns[id] = Find.TickManager.TicksGame;
+            RecordQuest("QP_PawnHealed".Translate(pawn.LabelShort), id, QuestRecordType.MinorBonus, customWeight: 0);
+            LogDebug($"Tracking rescued pawn: {pawn.LabelShort} (id={id})");
+        }
+    }
+
+    private void CheckRescuedPawns()
+    {
+        if (rescuedPawns.Count == 0) return;
+
+        int now = Find.TickManager.TicksGame;
+        var toRemove = new List<int>();
+
+        foreach (var kvp in rescuedPawns)
+        {
+            int pawnId = kvp.Key;
+            int rescuedTick = kvp.Value;
+
+            var pawn = Find.WorldPawns.AllPawnsAliveOrDead
+                .Find(p => p.thingIDNumber == pawnId);
+            if (pawn == null)
+            {
+                // Also check maps
+                foreach (var map in Find.Maps)
+                {
+                    pawn = map.mapPawns.AllPawns.Find(p => p.thingIDNumber == pawnId);
+                    if (pawn != null) break;
+                }
+            }
+
+            if (pawn == null || pawn.Dead)
+            {
+                toRemove.Add(pawnId);
+                // Remove the 0-weight record
+                records.RemoveAll(r => r.questId == pawnId && r.customWeight == 0
+                    && r.type == QuestRecordType.MinorBonus);
+                LogDebug($"Rescued pawn died or gone (id={pawnId})");
+                continue;
+            }
+
+            if (now - rescuedTick >= RescueSurvivalTicks)
+            {
+                toRemove.Add(pawnId);
+                // Update existing 0-weight record to +1
+                for (int i = records.Count - 1; i >= 0; i--)
+                {
+                    if (records[i].questId == pawnId && records[i].customWeight == 0
+                        && records[i].type == QuestRecordType.MinorBonus)
+                    {
+                        var r = records[i];
+                        r.customWeight = 1;
+                        records[i] = r;
+                        ShowMoteOverLeader(1);
+                        break;
+                    }
+                }
+                LogDebug($"Rescued pawn survived 30 days: {pawn.LabelShort} +1 karma");
+            }
+        }
+
+        foreach (var id in toRemove)
+            rescuedPawns.Remove(id);
+    }
+
     private int nextYearlyTick;
 
     public override void GameComponentTick()
@@ -148,6 +222,8 @@ public class GameComponent_QuestPressure : GameComponent
         if (cleanupCounter < 60000)
             return;
         cleanupCounter = 0;
+
+        CheckRescuedPawns();
 
         // Yearly compression
         int ticksNow = Find.TickManager.TicksGame;
@@ -189,5 +265,8 @@ public class GameComponent_QuestPressure : GameComponent
         if (records == null)
             records = new List<QuestRecord>();
         Scribe_Values.Look(ref nextYearlyTick, "nextYearlyTick");
+        Scribe_Collections.Look(ref rescuedPawns, "rescuedPawns", LookMode.Value, LookMode.Value);
+        if (rescuedPawns == null)
+            rescuedPawns = new Dictionary<int, int>();
     }
 }

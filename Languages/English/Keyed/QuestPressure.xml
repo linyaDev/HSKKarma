@@ -47,6 +47,8 @@
 	<QP_RefugeeAccepted>Refugee given shelter</QP_RefugeeAccepted>
 	<QP_RefugeeRejected>Refugee turned away</QP_RefugeeRejected>
 	<QP_ColonistKilled>Colonist killed by own</QP_ColonistKilled>
+	<QP_PawnHealed>{0} healed and survived</QP_PawnHealed>
+	<QP_HealDaysLeft>+ karma in {0} days if survives</QP_HealDaysLeft>
 
 	<!-- Quest name overrides -->
 	<QP_QuestName_WandererJoinAbasia>Wanderer with abasia</QP_QuestName_WandererJoinAbasia>

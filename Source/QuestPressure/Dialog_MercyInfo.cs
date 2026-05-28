@@ -199,8 +199,20 @@ public class Dialog_MercyInfo : Window
             string questName = PrettyQuestName(r.questName);
             string displayName = questName.Length > 25 ? questName.Substring(0, 22) + "..." : questName;
             Widgets.Label(new Rect(25f, rowY, nameWidth, 28f), displayName);
-            if (questName.Length > 25 && Mouse.IsOver(new Rect(25f, rowY, nameWidth, 28f)))
-                TooltipHandler.TipRegion(new Rect(25f, rowY, nameWidth, 28f), questName);
+            Rect nameRect = new Rect(25f, rowY, nameWidth, 28f);
+            if (Mouse.IsOver(nameRect))
+            {
+                string tip = questName.Length > 25 ? questName : null;
+                // Show days remaining for tracked rescued pawns
+                if (r.customWeight == 0 && r.type == QuestRecordType.MinorBonus && r.questId > 0)
+                {
+                    int daysLeft = 30 - (Find.TickManager.TicksGame - r.tick) / 60000;
+                    if (daysLeft > 0)
+                        tip = (tip != null ? tip + "\n" : "") + "QP_HealDaysLeft".Translate(daysLeft);
+                }
+                if (tip != null)
+                    TooltipHandler.TipRegion(nameRect, tip);
+            }
 
             // Points
             GUI.color = isPositive ? GreenText : RedText;

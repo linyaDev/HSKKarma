@@ -47,6 +47,8 @@
 	<QP_RefugeeAccepted>Беженцу дали убежище</QP_RefugeeAccepted>
 	<QP_RefugeeRejected>Беженцу отказано</QP_RefugeeRejected>
 	<QP_ColonistKilled>Колонист убит своими</QP_ColonistKilled>
+	<QP_PawnHealed>{0} вылечен и выжил</QP_PawnHealed>
+	<QP_HealDaysLeft>+ к карме через {0} дн. если выживет</QP_HealDaysLeft>
 
 	<!-- Quest name overrides -->
 	<QP_QuestName_WandererJoinAbasia>Бродяга с абазией</QP_QuestName_WandererJoinAbasia>

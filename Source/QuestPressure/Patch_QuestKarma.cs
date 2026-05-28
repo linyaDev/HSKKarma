@@ -34,7 +34,9 @@ static class QuestKarmaExclusions
         "SanguophageShip",
         "Intro_Deserter",
         "SightstealerArrival",
-        "BestowingCeremony"
+        "BestowingCeremony",
+        "CreepJoinerArrival",
+        "CreepJoinerArrival_Metalhorror"
     };
 
     public static bool IsExcluded(Quest quest)
