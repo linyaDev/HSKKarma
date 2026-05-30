@@ -36,7 +36,8 @@ static class QuestKarmaExclusions
         "SightstealerArrival",
         "BestowingCeremony",
         "CreepJoinerArrival",
-        "CreepJoinerArrival_Metalhorror"
+        "CreepJoinerArrival_Metalhorror",
+        "TradeRequest"
     };
 
     public static bool IsExcluded(Quest quest)
