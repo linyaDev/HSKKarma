@@ -248,7 +248,7 @@ public class Dialog_MercyInfo : Window
                 if (def?.stages != null)
                     _stageMoods = def.stages.ConvertAll(s => (int)s.baseMoodEffect).ToArray();
                 else
-                    _stageMoods = new[] { -10, -8, -6, -4, -2, 0, 1, 2, 3, 4 };
+                    _stageMoods = new[] { -5, -4, -3, -2, -1, 0, 1, 2, 3, 4 };
             }
             return _stageMoods;
         }

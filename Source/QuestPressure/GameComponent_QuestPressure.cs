@@ -52,14 +52,14 @@ public class GameComponent_QuestPressure : GameComponent
     }
 
     public const int CompletedWeight = 2;
-    public const int ExpiredWeight = -2;
+    public const int ExpiredWeight = -1;
     public const int FailedWeight = -3;
     public const int MinorPenaltyWeight = -1;
     public const int MajorPenaltyWeight = -4;
     public const int MinorBonusWeight = 1;
     public const int CharityCompletedWeight = 3;
-    public const int CharityExpiredWeight = -4;
-    public const int CharityFailedWeight = -5;
+    public const int CharityExpiredWeight = -2;
+    public const int CharityFailedWeight = -4;
     public const int TinyBonusWeight = 1;
     public const int TinyPenaltyWeight = -1;
     public const int ColonistKilledWeight = -5;

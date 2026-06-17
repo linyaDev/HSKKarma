@@ -7,17 +7,17 @@
 			<li>
 				<label>heartless</label>
 				<description>We have ignored so many pleas for help. We are monsters.</description>
-				<baseMoodEffect>-8</baseMoodEffect>
+				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 			<li>
 				<label>cruel</label>
 				<description>We keep turning away those who need us. It's eating at me.</description>
-				<baseMoodEffect>-6</baseMoodEffect>
+				<baseMoodEffect>-4</baseMoodEffect>
 			</li>
 			<li>
 				<label>indifferent</label>
 				<description>We rarely help anyone. Are we really that cold?</description>
-				<baseMoodEffect>-4</baseMoodEffect>
+				<baseMoodEffect>-3</baseMoodEffect>
 			</li>
 			<li>
 				<label>apathetic</label>

@@ -8,6 +8,8 @@ public class QuestPressureSettings : ModSettings
     public float siteThreatMultiplier = 1.0f;
     public float rewardMultiplier = 0.25f;
     public bool limitRefugees = true;
+    // Obsolete: lodger caps are now derived from tech era in LodgerLimit.
+    // Kept only so existing saves load without errors.
     public int maxRefugees = 4;
     public int maxHelpers = 2;
     public bool nerfWastepacks = true;

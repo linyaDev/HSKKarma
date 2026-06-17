@@ -33,12 +33,9 @@ public class QuestPressureMod : Mod
         // === Quests ===
         SectionHeader(list, "QP_QuestSection".Translate());
 
+        // Lodger count is capped by a hardcoded era-based formula (see LodgerLimit);
+        // this toggle is the master on/off switch for that limiting.
         list.CheckboxLabeled("QP_LimitRefugees".Translate(), ref Settings.limitRefugees, "QP_LimitRefugeesTooltip".Translate());
-        if (Settings.limitRefugees)
-        {
-            InputLabeled(list, "QP_MaxRefugees".Translate(), ref Settings.maxRefugees, 1, 10);
-            InputLabeled(list, "QP_MaxHelpers".Translate(), ref Settings.maxHelpers, 1, 6);
-        }
 
         // === Wastepacks ===
         list.Gap(4f);
